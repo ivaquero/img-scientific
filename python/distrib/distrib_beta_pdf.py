@@ -19,7 +19,7 @@ X = np.linspace(0, 1, 100)
 
 _, ax = plt.subplots()
 
-for α, β, alpha in zip(αs, βs, alphas):
+for α, β, alpha in zip(αs, βs, alphas, strict=True):
     y = stats.beta(α, β).pdf(X)
     ax.plot(X, y, label=f"a = {α:2.1f}, b = {β:2.1f}", alpha=alpha)
     ax.fill_between(X, y, alpha=0.25)
@@ -29,5 +29,5 @@ ax.legend()
 
 
 filename, extension = path.splitext(path.basename(__file__))
-plt.savefig(f"../../images/distrs/{filename}.png")
+# plt.savefig(f"../../images/distrs/{filename}.png")
 plt.show()

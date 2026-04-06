@@ -41,5 +41,5 @@ for i, j in product(range(2), range(5)):
 f.text(0.5, -0.05, "x_1", ha="center")
 f.text(-0.05, 0.5, "x_2", va="center", rotation=0)
 filename, extension = path.splitext(path.basename(__file__))
-plt.savefig(f"../../images/distrs/{filename}.png")
+# plt.savefig(f"../../images/distrs/{filename}.png")
 plt.show()

@@ -42,5 +42,5 @@ ax.set(xlim=(-3, 3), ylim=(0, 0.45), title="Percentage of X falling between $i$ 
 ax.legend()
 
 filename, extension = path.splitext(path.basename(__file__))
-plt.savefig(f"../../images/trials/{filename}.png")
+# plt.savefig(f"../../images/trials/{filename}.png")
 plt.show()

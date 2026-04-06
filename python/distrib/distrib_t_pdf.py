@@ -19,7 +19,7 @@ X = np.linspace(-10, 10, 100)
 
 _, ax = plt.subplots()
 
-for df, color, alpha in zip(dfs, colors, alphas):
+for df, color, alpha in zip(dfs, colors, alphas, strict=True):
     y = stats.t.pdf(X, df=df)
     ax.plot(X, y, label=f"n={df}", color=color, alpha=alpha)
     ax.fill_between(X, y, color=color, alpha=0.25)
@@ -28,5 +28,5 @@ ax.set(xlabel="X", ylabel="PDF(X)", title="$t$ Distribution")
 ax.legend()
 
 filename, extension = path.splitext(path.basename(__file__))
-plt.savefig(f"../../images/distrs/{filename}.png")
+# plt.savefig(f"../../images/distrs/{filename}.png")
 plt.show()

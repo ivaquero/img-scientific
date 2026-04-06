@@ -5,10 +5,11 @@ import numpy as np
 
 def rewire(G, p):
     nodes = set(G)
+    rng = np.random.default_rng(42)
     for u, v in G.edges():
-        if np.random.random() < p:
+        if rng.random() < p:
             choices = nodes - {u} - set(G[u])
-            new_v = np.random.choice(list(choices))
+            new_v = rng.choice(list(choices))
             G.remove_edge(u, v)
             G.add_edge(u, new_v)
 

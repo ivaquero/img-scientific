@@ -15,7 +15,7 @@ plt.style.use("seaborn-v0_8-dark")
 
 def probs(n_trials, pair):
     if sum(pair) == n_trials:
-        a, b, c = pair
+        # a, b, c = pair
         return special.factorial(n_trials) / np.prod(
             [special.factorial(i) for i in pair]
         )
@@ -41,5 +41,5 @@ for n_trials in [20, 21, 22]:
 ax.legend()
 
 filename, extension = path.splitext(path.basename(__file__))
-plt.savefig(f"../../images/distrs/{filename}.png")
+# plt.savefig(f"../../images/distrs/{filename}.png")
 plt.show()

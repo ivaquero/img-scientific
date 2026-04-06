@@ -18,7 +18,7 @@ X = np.linspace(0, 10, 100)
 
 _, ax = plt.subplots()
 
-for loc, alpha in zip(locs, alphas):
+for loc, alpha in zip(locs, alphas, strict=True):
     y = stats.expon.pdf(X, loc=loc)
     ax.plot(X, y, label=f"n={loc}", alpha=alpha)
     ax.fill_between(X, y, alpha=0.25)
@@ -27,5 +27,5 @@ ax.set(xlabel="X", ylabel="PDF(X)", title="Exponential Distribution")
 ax.legend()
 
 filename, extension = path.splitext(path.basename(__file__))
-plt.savefig(f"../../images/distrs/{filename}.png")
+# plt.savefig(f"../../images/distrs/{filename}.png")
 plt.show()

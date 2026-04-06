@@ -22,5 +22,5 @@ ax.set(xlabel="X", ylabel="PDF(X)", title="Weibull Distribution")
 ax.legend()
 
 filename, extension = path.splitext(path.basename(__file__))
-plt.savefig(f"../../images/distrs/{filename}.png")
+# plt.savefig(f"../../images/distrs/{filename}.png")
 plt.show()

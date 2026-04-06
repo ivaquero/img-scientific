@@ -18,7 +18,7 @@ X = np.arange(0, 26, 1)
 
 _, ax = plt.subplots()
 
-for λ, alpha in zip(λs, alphas):
+for λ, alpha in zip(λs, alphas, strict=True):
     y = stats.poisson(mu=λ).pmf(X)
     ax.bar(X, y, label=f"λ={λ}", alpha=alpha)
 
@@ -26,5 +26,5 @@ ax.set(xlabel="X", ylabel="PMF(X)", title="Poisson Distribution")
 ax.legend()
 
 filename, extension = path.splitext(path.basename(__file__))
-plt.savefig(f"../../images/distrs/{filename}.png")
+# plt.savefig(f"../../images/distrs/{filename}.png")
 plt.show()

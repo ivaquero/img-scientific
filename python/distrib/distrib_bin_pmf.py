@@ -19,7 +19,7 @@ X = np.arange(0, 20 + 1)
 
 _, ax = plt.subplots()
 
-for n, p, alpha in zip(ns, ps, alphas):
+for n, p, alpha in zip(ns, ps, alphas, strict=True):
     y = stats.binom(n=n, p=p).pmf(X)
     ax.bar(X, y, label=f"N={n}, p={p}", alpha=alpha)
 
@@ -27,5 +27,5 @@ ax.set(xlabel="x", ylabel="PMF(X)", title="Binomial Distribution")
 ax.legend()
 
 filename, extension = path.splitext(path.basename(__file__))
-plt.savefig(f"../../images/distrs/{filename}.png")
+# plt.savefig(f"../../images/distrs/{filename}.png")
 plt.show()

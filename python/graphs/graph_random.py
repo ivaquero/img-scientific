@@ -10,14 +10,15 @@ def all_pairs_undirected(nodes):
                 yield u, v
 
 
-def random_pairs_undirected(nodes, p):
+def random_pairs_undirected(nodes, p, seed=42):
+    rng = np.random.default_rng(seed)
     for edge in all_pairs_undirected(nodes):
-        if np.random.random() < p:
+        if rng.random() < p:
             yield edge
 
 
 def make_random_graph(n, p, seed=42):
-    np.random.default_rng(seed)
+    _ = np.random.default_rng(seed)
     G = nx.Graph()
     nodes = range(n)
     G.add_nodes_from(nodes)

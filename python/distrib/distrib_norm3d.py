@@ -27,10 +27,13 @@ y = np.linspace(y_range[0], y_range[1], N)
 xx, yy = np.meshgrid(x, y)
 zv = np.zeros((N, N))
 
-for mean, cov in zip(xs, ps):
+for mean, cov in zip(xs, ps, strict=True):
     multinorm = stats.multivariate_normal(mean, cov)
     zs = np.array(
-        [multinorm.pdf(np.array([i, j])) for i, j in zip(np.ravel(xx), np.ravel(yy))]
+        [
+            multinorm.pdf(np.array([i, j]))
+            for i, j in zip(np.ravel(xx), np.ravel(yy), strict=True)
+        ]
     )
     zv += zs.reshape(xx.shape)
 

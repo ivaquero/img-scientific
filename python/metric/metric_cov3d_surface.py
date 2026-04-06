@@ -7,7 +7,7 @@ import math
 from os import path
 
 import matplotlib.pyplot as plt
-import metric_cov
+import metric_cov_ellipse
 import numpy as np
 from matplotlib import cm
 from scipy import stats
@@ -15,7 +15,7 @@ from scipy import stats
 
 def plot_cov3d_surface(ax, mean, cov):
     # get orientation, width, height of covariance ellipse
-    o, w, h = metric_cov.covariance_ellipse(cov, 3)
+    o, w, h = metric_cov_ellipse.covariance_ellipse(cov, 3)
     # rotate width and height to x, y axis
     wx = abs(w * math.cos(o) + h * math.sin(o)) * 1.2
     wy = abs(h * math.cos(o) - w * math.sin(o)) * 1.2
@@ -36,7 +36,7 @@ def plot_cov3d_surface(ax, mean, cov):
     zs = np.array(
         [
             100.0 * multinorm.pdf(np.array([x, y]))
-            for x, y in zip(np.ravel(xv), np.ravel(yv))
+            for x, y in zip(np.ravel(xv), np.ravel(yv), strict=True)
         ]
     )
     zv = zs.reshape(xv.shape)
@@ -53,5 +53,5 @@ plot_cov3d_surface(ax, mean, cov)
 ax.set(xlabel="X", ylabel="Y")
 
 filename, extension = path.splitext(path.basename(__file__))
-plt.savefig(f"../../images/funcs/{filename}.png")
+# plt.savefig(f"../../images/funcs/{filename}.png")
 plt.show()

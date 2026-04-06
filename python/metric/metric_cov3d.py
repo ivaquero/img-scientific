@@ -67,7 +67,8 @@ def plot_3d_covariance(ax, mean, cov, std=1.0, color=None, alpha=1.0, N=60, **kw
 
 mu = [0.3, 5.0, 10.0]
 C = np.array([[1.0, 0.03, 0.2], [0.03, 4.0, 0.0], [0.2, 0.0, 16.1]])
-sample = np.random.multivariate_normal(mu, C, size=1000)
+rng = np.random.default_rng(42)
+sample = rng.multivariate_normal(mu, C, size=1000)
 
 fig = plt.gcf()
 ax = fig.add_subplot(111, projection="3d")
@@ -75,5 +76,5 @@ plot_3d_covariance(ax, mu, C, alpha=0.4, std=3)
 ax.scatter(sample[:, 0], sample[:, 1], zs=sample[:, 2])
 
 filename, extension = path.splitext(path.basename(__file__))
-plt.savefig(f"../../images/funcs/{filename}.png")
+# plt.savefig(f"../../images/funcs/{filename}.png")
 plt.show()

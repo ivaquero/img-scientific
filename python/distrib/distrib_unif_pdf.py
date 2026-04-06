@@ -19,7 +19,7 @@ X = np.linspace(-4, 4, 100)
 
 _, ax = plt.subplots()
 
-for loc, scale, alpha in zip(locs, scales, alphas):
+for loc, scale, alpha in zip(locs, scales, alphas, strict=True):
     y = stats.uniform(loc=loc, scale=scale).pdf(X)
     ax.plot(X, y, label=f"loc={loc}, scale={scale}", alpha=alpha)
     ax.fill_between(X, y, alpha=0.25)
@@ -29,5 +29,5 @@ ax.legend(loc="upper left")
 
 
 filename, extension = path.splitext(path.basename(__file__))
-plt.savefig(f"../../images/distrs/{filename}.png")
+# plt.savefig(f"../../images/distrs/{filename}.png")
 plt.show()

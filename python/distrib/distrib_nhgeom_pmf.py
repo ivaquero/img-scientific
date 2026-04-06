@@ -19,7 +19,7 @@ alphas = [0.2, 0.2, 0.4, 0.6, 0.6]
 _, ax = plt.subplots()
 
 X = np.arange(0, 26, 1)
-for N, M, r, alpha in zip(Ns, Ms, rs, alphas):
+for N, M, r, alpha in zip(Ns, Ms, rs, alphas, strict=True):
     y = stats.nhypergeom(N, M, r).pmf(X)
     ax.bar(X, y, label=f"N={N}, M={M}, r={r}", alpha=alpha)
 
@@ -27,5 +27,5 @@ ax.set(xlabel="X", ylabel="PMF(X)", title="Negative Hypergeomic Distribution")
 ax.legend()
 
 filename, extension = path.splitext(path.basename(__file__))
-plt.savefig(f"../../images/distrs/{filename}.png")
+# plt.savefig(f"../../images/distrs/{filename}.png")
 plt.show()

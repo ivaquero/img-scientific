@@ -57,5 +57,5 @@ ax.annotate(
 )
 
 filename, extension = path.splitext(path.basename(__file__))
-plt.savefig(f"../../images/funcs/{filename}.png")
+# plt.savefig(f"../../images/funcs/{filename}.png")
 plt.show()

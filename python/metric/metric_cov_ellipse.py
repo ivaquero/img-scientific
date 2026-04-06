@@ -78,5 +78,5 @@ std = [1, 2, 3]
 plot_cov_ellipse(ax, mean, P, stds=std)
 
 filename, extension = path.splitext(path.basename(__file__))
-plt.savefig(f"../../images/funcs/{filename}.png")
+# plt.savefig(f"../../images/funcs/{filename}.png")
 plt.show()

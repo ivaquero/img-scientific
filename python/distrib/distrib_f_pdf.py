@@ -19,7 +19,7 @@ X = np.linspace(0, 10, 100)
 
 _, ax = plt.subplots()
 
-for loc, loc2, alpha in zip(locs, loc2s, alphas):
+for loc, loc2, alpha in zip(locs, loc2s, alphas, strict=True):
     y = stats.f.pdf(X, dfn=loc, dfd=loc2)
     ax.plot(X, y, label=f"n1={loc}, n2={loc2}", alpha=alpha)
     ax.fill_between(X, y, alpha=0.25)
@@ -28,5 +28,5 @@ ax.set(xlabel="X", ylabel="PMF(X)", title="F Distribution")
 ax.legend()
 
 filename, extension = path.splitext(path.basename(__file__))
-plt.savefig(f"../../images/distrs/{filename}.png")
+# plt.savefig(f"../../images/distrs/{filename}.png")
 plt.show()

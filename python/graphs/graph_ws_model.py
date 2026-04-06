@@ -5,7 +5,8 @@ from networkx.algorithms.approximation import average_clustering
 
 def sample_path_lengths(G, nodes=None, trials=1000):
     nodes = list(G) if nodes is None else list(nodes)
-    pairs = np.random.choice(nodes, (trials, 2))
+    rng = np.random.default_rng(42)
+    pairs = rng.choice(nodes, (trials, 2))
     return [nx.shortest_path_length(G, *pair) for pair in pairs]
 
 

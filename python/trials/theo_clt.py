@@ -20,7 +20,7 @@ alphas = [0.4, 0.4, 0.6]
 
 fig, axes = plt.subplots(1, 3, figsize=(12, 4), constrained_layout=True, sharey=True)
 
-for ax, n, color, alpha in zip(axes, ns, colors, alphas):
+for ax, n, color, alpha in zip(axes, ns, colors, alphas, strict=True):
     x = stats.expon.rvs(loc=1, size=n_sim * n).reshape((n_sim, n))
     x_bar = x.mean(axis=1)
 
@@ -30,5 +30,5 @@ for ax, n, color, alpha in zip(axes, ns, colors, alphas):
 axes[0].set(ylabel="Frequency")
 
 filename, extension = path.splitext(path.basename(__file__))
-plt.savefig(f"../../images/trials/{filename}.png")
+# plt.savefig(f"../../images/trials/{filename}.png")
 plt.show()

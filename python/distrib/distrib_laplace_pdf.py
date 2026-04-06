@@ -20,7 +20,7 @@ X = np.linspace(-10, 10, 100)
 
 _, ax = plt.subplots()
 
-for loc, scale, color, alpha in zip(locs, scales, colors, alphas):
+for loc, scale, color, alpha in zip(locs, scales, colors, alphas, strict=True):
     y = stats.laplace(loc=loc, scale=scale).pdf(X)
     ax.plot(X, y, label=f"μ={loc}, σ={scale}", color=color, alpha=alpha)
     ax.fill_between(X, y, color=color, alpha=0.25)
@@ -31,5 +31,5 @@ ax.set(xlabel="X", ylabel="PDF(X)", title="Laplace Distribution")
 ax.legend()
 
 filename, extension = path.splitext(path.basename(__file__))
-plt.savefig(f"../../images/distrs/{filename}.png")
+# plt.savefig(f"../../images/distrs/{filename}.png")
 plt.show()

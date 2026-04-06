@@ -18,7 +18,7 @@ X = np.arange(0, 26, 1)
 
 _, ax = plt.subplots()
 
-for p, alpha in zip(ps, alphas):
+for p, alpha in zip(ps, alphas, strict=True):
     y = stats.geom(p=p).pmf(X)
     ax.bar(X, y, label=f"p={p}", alpha=alpha)
 
@@ -26,5 +26,5 @@ ax.set(xlabel="X", ylabel="PMF(X)", title="Geometric Distribution")
 ax.legend()
 
 filename, extension = path.splitext(path.basename(__file__))
-plt.savefig(f"../../images/distrs/{filename}.png")
+# plt.savefig(f"../../images/distrs/{filename}.png")
 plt.show()

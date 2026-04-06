@@ -15,8 +15,9 @@ plt.style.use("seaborn-v0_8-dark")
 alphas = [0.3, 0.4, 0.5, 0.6]
 
 
-def sampling(s=1):
-    x = np.random.randint(1, 100, size=(3, 1))
+def sampling(s=1, seed=42):
+    rng = np.random.default_rng(seed)
+    x = rng.randint(1, 100, size=(3, 1))
     return [s * (xi / sum(x)) for xi in x]
 
 
@@ -37,7 +38,7 @@ def dirichlet(x, α, n_trails):
     c = 1 / beta_function(α)
     y = []
     for xn in x:
-        prods = [xi ** (ai - 1) for xi, ai in zip(xn, α)]
+        prods = [xi ** (ai - 1) for xi, ai in zip(xn, α, strict=True)]
         y.append(np.prod(prods, initial=c))
 
     x = np.arange(n_trails)
@@ -46,7 +47,7 @@ def dirichlet(x, α, n_trails):
 
 _, ax = plt.subplots()
 n_exp = 1200
-for ls, alpha in zip(α_lists, alphas):
+for ls, alpha in zip(α_lists, alphas, strict=True):
     α = np.array(ls)
     x = [sampling() for _ in range(1, n_exp + 1)]
     x, y, _, _ = dirichlet(x, α, n_trails=n_exp)
@@ -55,5 +56,5 @@ for ls, alpha in zip(α_lists, alphas):
 ax.legend()
 
 filename, extension = path.splitext(path.basename(__file__))
-plt.savefig(f"../../images/distrs/{filename}.png")
+# plt.savefig(f"../../images/distrs/{filename}.png")
 plt.show()

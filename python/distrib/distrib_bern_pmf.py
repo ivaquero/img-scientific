@@ -13,7 +13,7 @@ plt.style.use("seaborn-v0_8-dark")
 
 
 def plot_bernoulli_pmf(ax, ps, alphas, X):
-    for p, alpha in zip(ps, alphas):
+    for p, alpha in zip(ps, alphas, strict=True):
         y = stats.bernoulli(p=p).pmf(X)
         ax.bar(X, y, label=f"p={p}", alpha=alpha)
 
@@ -29,5 +29,5 @@ _, ax = plt.subplots()
 plot_bernoulli_pmf(ax, ps, alphas, X)
 
 filename, extension = path.splitext(path.basename(__file__))
-plt.savefig(f"../../images/distrs/{filename}.png")
+# plt.savefig(f"../../images/distrs/{filename}.png")
 plt.show()

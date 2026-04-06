@@ -22,7 +22,10 @@ r_pmf = r.pmf(x)
 _, axes = plt.subplots(1, 3, figsize=(12, 4), sharey=True, constrained_layout=True)
 
 for dist, label, ax in zip(
-    [true_distribution, q_pmf, r_pmf], ["true_distribution", "q", "r"], axes.flatten()
+    [true_distribution, q_pmf, r_pmf],
+    ["true_distribution", "q", "r"],
+    axes.flatten(),
+    strict=True,
 ):
     ax.vlines(x, 0, dist, label=f"entropy = {stats.entropy(dist):.2f}")
     ax.set_title(label)
@@ -30,5 +33,5 @@ for dist, label, ax in zip(
     ax.legend(loc=2, handlelength=0)
 
 filename, extension = path.splitext(path.basename(__file__))
-plt.savefig(f"../../images/funcs/{filename}.png")
+# plt.savefig(f"../../images/funcs/{filename}.png")
 plt.show()

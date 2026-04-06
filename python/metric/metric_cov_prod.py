@@ -6,7 +6,7 @@ Link: https://github.com/ivaquero
 from os import path
 
 import matplotlib.pyplot as plt
-from metric_cov import plot_cov_ellipse
+from metric_cov_ellipse import plot_cov_ellipse
 from metric_utils import multi_gaussian_product
 
 P0 = [[6, 0], [0, 6]]
@@ -27,5 +27,5 @@ plot_cov_ellipse(
 ax.legend()
 
 filename, extension = path.splitext(path.basename(__file__))
-plt.savefig(f"../../images/funcs/{filename}.png")
+# plt.savefig(f"../../images/funcs/{filename}.png")
 plt.show()

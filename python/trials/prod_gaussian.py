@@ -28,7 +28,7 @@ def gaussian_product(g1: Gaussian, g2: Gaussian) -> Gaussian:
 def plot_gaussian_product(ax, xs, g1: Gaussian, g2: Gaussian):
     g_product = gaussian_product(g1, g2)
 
-    for g, ls in zip([g1, g2, g_product], ["-", "-", "--"]):
+    for g, ls in zip([g1, g2, g_product], ["-", "-", "--"], strict=True):
         ys = [stats.norm(g.mean, g.var**0.5).pdf(x) for x in xs]
         ax.plot(xs, ys, linestyle=ls, label=f"$N({g.mean:.2f}, {g.var:.2f})$")
 
@@ -43,5 +43,5 @@ xs = np.linspace(-15, 15, 100)
 plot_gaussian_product(ax, xs, g1, g2)
 
 filename, extension = path.splitext(path.basename(__file__))
-plt.savefig(f"../../images/trials/{filename}.png")
+# plt.savefig(f"../../images/trials/{filename}.png")
 plt.show()

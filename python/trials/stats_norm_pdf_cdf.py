@@ -23,7 +23,7 @@ y = func.pdf(x)
 ix = np.linspace(start, loc)
 iy = func.pdf(ix)
 
-shade = [(start, 0), *zip(ix, iy), (loc, 0)]
+shade = [(start, 0), *zip(ix, iy, strict=True), (loc, 0)]
 polygon = plt.Polygon(shade, facecolor="0.9", edgecolor="0.5")
 axes[0].plot(x, y)
 axes[0].add_patch(polygon)
@@ -45,5 +45,5 @@ axes[1].axvline(x=0, ymin=0.05, ymax=1, ls="--")
 axes[1].set(xlabel="x", ylabel="CDF(x)")
 
 filename, extension = path.splitext(path.basename(__file__))
-plt.savefig(f"../../images/trials/{filename}.png")
+# plt.savefig(f"../../images/trials/{filename}.png")
 plt.show()

@@ -1,63 +1,59 @@
+"""Barnsley fern iterated-function-system scatter."""
+
 import matplotlib.pyplot as plt
 import numpy as np
 
-
-def transformation_1(point):
-    x, y = point
-    x_new = 0.85 * x + 0.04 * y
-    y_new = -0.04 * x + 0.85 * y + 1.6
-    return x_new, y_new
+from img_scientific._registry import chart
+from img_scientific._style import set_style
 
 
-def transformation_2(point):
-    x, y = point
-    x_new = 0.20 * x - 0.26 * y
-    y_new = 0.23 * x + 0.22 * y + 1.6
-    return x_new, y_new
+def _t1(p):
+    x, y = p
+    return 0.85 * x + 0.04 * y, -0.04 * x + 0.85 * y + 1.6
 
 
-def transformation_3(point):
-    x, y = point
-    x_new = -0.15 * x + 0.28 * y
-    y_new = 0.26 * x + 0.24 * y + 0.44
-    return x_new, y_new
+def _t2(p):
+    x, y = p
+    return 0.20 * x - 0.26 * y, 0.23 * x + 0.22 * y + 1.6
 
 
-def transformation_4(point):
-    _, y = point
-    x_new = 0.0
-    y_new = 0.16 * y
-    return x_new, y_new
+def _t3(p):
+    x, y = p
+    return -0.15 * x + 0.28 * y, 0.26 * x + 0.24 * y + 0.44
 
 
-transformations = [
-    transformation_1,
-    transformation_2,
-    transformation_3,
-    transformation_4,
-]
-probabilities = [0.85, 0.07, 0.07, 0.01]
+def _t4(p):
+    _, y = p
+    return 0.0, 0.16 * y
 
 
-def generate_fern(num_points):
-    points = [(0, 0)]
-    current_point = np.array([0, 0])
-    rng = np.random.default_rng()
+_TRANSFORMS = [_t1, _t2, _t3, _t4]
+_PROBABILITIES = [0.85, 0.07, 0.07, 0.01]
+
+
+def generate_fern(num_points, rng):
+    points = [(0.0, 0.0)]
+    current = np.array([0.0, 0.0])
     for _ in range(num_points):
-        random_transformation = rng.choice(transformations, p=probabilities)
-        current_point = random_transformation(current_point)
-        points.append(tuple(current_point))
-
+        current = np.array(_TRANSFORMS[rng.choice(4, p=_PROBABILITIES)](current))
+        points.append(tuple(current))
     return points
 
 
-num_points = 50000
-fern_points = generate_fern(num_points)
+@chart("fractals/fern")
+def make_fern(
+    *, num_points=50000, seed=1, color="green", point_size=0.2, title="Barnsley Fern"
+):
+    """Barnsley-fern IFS: iterated affine maps chosen with fixed probabilities."""
+    set_style()
 
-x_vals, y_vals = zip(*fern_points, strict=True)
+    rng = np.random.default_rng(seed)
+    pts = generate_fern(num_points, rng)
+    xs, ys = zip(*pts, strict=True)
 
-plt.figure(figsize=(6, 9))
-plt.scatter(x_vals, y_vals, s=0.2, c="green")
-plt.title("Barnsley Fern")
-plt.axis("off")
-plt.show()
+    fig = plt.figure(figsize=(6, 9))
+    ax = fig.add_subplot()
+    ax.scatter(xs, ys, s=point_size, c=color)
+    ax.set(title=title)
+    ax.axis("off")
+    return fig

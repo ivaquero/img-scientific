@@ -1,0 +1,11 @@
+id = "fractals/fern"
+title = "Barnsley Fern"
+kind = "scatter"
+module = "img_scientific.fractals.fern"
+out = "fern"
+
+[params]
+num_points = 50000
+seed = 1
+color = "green"
+point_size = 0.2

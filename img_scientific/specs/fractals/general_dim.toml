@@ -1,0 +1,14 @@
+id = "fractals/general_dim"
+title = "Generalized (Multifractal) Dimensions"
+kind = "line"
+module = "img_scientific.fractals.general_dim"
+out = "general_dim"
+
+[params]
+p1 = 0.1111111111111111
+p2 = 0.8888888888888888
+k = 500
+x_min = -20.0
+x_max = 20.0
+tau_num = 1000
+dq_num = 100

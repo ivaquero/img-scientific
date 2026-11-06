@@ -1,24 +1,32 @@
-﻿import turtle
+"""Koch curve (turtle geometry replayed with matplotlib)."""
+
+import matplotlib.pyplot as plt
+
+from img_scientific._registry import chart
+from img_scientific._style import set_style
+
+from ._geom import koch_cmds, walk
 
 
-# size：直线长度，n：阶数
-def kochCurve(size, n):
-    if n == 0:
-        turtle.fd(size)
-    else:
-        for angle in [0, 60, -120, 60]:
-            turtle.left(angle)
-            kochCurve(size / 3, n - 1)
+@chart("fractals/koch_curve")
+def make_koch_curve(
+    *,
+    size=600.0,
+    n=3,
+    start=(-300.0, -50.0),
+    color="blue",
+    linewidth=2.0,
+    title="Koch Curve",
+):
+    """Order-``n`` Koch curve drawn from a start point heading east."""
+    set_style()
 
+    pts = walk(koch_cmds(size, n), start)
+    xs, ys = zip(*pts, strict=True)
 
-def main():
-    turtle.setup(800, 400)  # 窗体大小
-    turtle.penup()
-    turtle.goto(-300, -50)
-    turtle.pendown()
-    turtle.pensize(2)  # 画笔宽度
-    kochCurve(600, 3)
-    turtle.hideturtle()
-
-
-main()
+    fig, ax = plt.subplots(figsize=(8, 4))
+    ax.plot(xs, ys, color=color, linewidth=linewidth)
+    ax.set(xlabel="x", ylabel="y", title=title)
+    ax.axis("equal")
+    ax.axis("off")
+    return fig

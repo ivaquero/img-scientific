@@ -1,28 +1,32 @@
-﻿import turtle
+"""Koch snowflake (turtle geometry replayed with matplotlib)."""
+
+import matplotlib.pyplot as plt
+
+from img_scientific._registry import chart
+from img_scientific._style import set_style
+
+from ._geom import snowflake_cmds, walk
 
 
-# size：直线长度，n：阶数
-def kochFlake(size, n):
-    if n == 0:
-        turtle.fd(size)
-    else:
-        for angle in [0, 60, -120, 60]:
-            turtle.left(angle)
-            kochFlake(size / 3, n - 1)
+@chart("fractals/koch_flake")
+def make_koch_flake(
+    *,
+    size=400.0,
+    n=3,
+    start=(-200.0, 100.0),
+    color="blue",
+    linewidth=2.0,
+    title="Koch Snowflake",
+):
+    """Order-``n`` Koch snowflake: three Koch sides closing the flake."""
+    set_style()
 
+    pts = walk(snowflake_cmds(size, n), start)
+    xs, ys = zip(*pts, strict=True)
 
-def main():
-    turtle.setup(600, 600)  # 窗体大小
-    turtle.penup()
-    turtle.goto(-200, 100)
-    turtle.pendown()
-    turtle.pensize(2)  # 画笔宽度
-    kochFlake(400, 3)
-    turtle.right(120)
-    kochFlake(400, 3)
-    turtle.right(120)
-    kochFlake(400, 3)
-    turtle.hideturtle()
-
-
-main()
+    fig, ax = plt.subplots(figsize=(6, 6))
+    ax.plot(xs, ys, color=color, linewidth=linewidth)
+    ax.set(title=title)
+    ax.axis("equal")
+    ax.axis("off")
+    return fig

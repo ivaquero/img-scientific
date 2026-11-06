@@ -1,44 +1,36 @@
-import turtle
+"""Sierpinski square fractal (turtle geometry replayed with matplotlib)."""
+
+import matplotlib.pyplot as plt
+
+from img_scientific._registry import chart
+from img_scientific._style import set_style
+
+from ._geom import sierpinski_squares
 
 
-def sierpinski_square(points, length, level, obj):
-    obj.up()
-    obj.goto(points[0], points[1])
-    obj.down()
-    obj.seth(0)
+@chart("fractals/sierpinski_square")
+def make_sierpinski_square(
+    *,
+    start=(-100.0, -100.0),
+    length=100.0,
+    level=3,
+    outer_color="blue",
+    inner_color="lightgray",
+    title="Sierpinski Squares",
+):
+    """Recursive quarter-squares: the base squares in blue, ancestors in gray."""
+    set_style()
 
-    if level > 0:
-        obj.color("light gray")
-    else:
-        obj.color("blue")
+    acc = []
+    sierpinski_squares(start[0], start[1], length, level, acc)
 
-    for _ in range(4):
-        obj.fd(length)
-        obj.left(90)
-    if level == 0:
-        return
+    fig, ax = plt.subplots(figsize=(6, 6))
+    for x, y, side, lvl in acc:
+        xs = [x, x + side, x + side, x, x]
+        ys = [y, y, y + side, y + side, y]
+        ax.plot(xs, ys, color=outer_color if lvl == 0 else inner_color)
 
-    sierpinski_square([points[0] + length, points[1]], length / 2, level - 1, obj)
-    sierpinski_square(
-        [points[0] + length, points[1] + length], length / 2, level - 1, obj
-    )
-    sierpinski_square([points[0], points[1] + length], length / 2, level - 1, obj)
-
-
-def main():
-    obj = turtle.Turtle()
-    screen = turtle.Screen()
-    screen.title("Sierpinski Squares")
-
-    points = [-100, -100]
-    length = 100
-    level = 3
-    sierpinski_square(points, length, level, obj)
-
-    turtle.speed(0)
-    turtle.hideturtle()
-    screen.tracer(0, 0)
-    screen.exitonclick()
-
-
-main()
+    ax.set(title=title)
+    ax.axis("equal")
+    ax.axis("off")
+    return fig

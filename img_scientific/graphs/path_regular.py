@@ -8,7 +8,7 @@ import networkx as nx
 from img_scientific._registry import chart
 from img_scientific._style import set_style
 
-from .path_ring import adjacent_edges
+from ._helpers import adjacent_edges
 
 
 def opposite_edges(nodes):

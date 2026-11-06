@@ -83,6 +83,7 @@ imgsci list                     # every chart that has a spec (no plotting deps 
 imgsci render distrib/geom_pmf  # draw one chart
 imgsci render distrib/norm_pdf --set x_num=400   # override a parameter
 imgsci gallery --topic distrib  # re-render a whole topic into images/
+imgsci new funcs/my_curve --kind line --param a=1 --param b=2,3,4  # scaffold spec + Python + Julia skeleton
 ```
 
 Julia:

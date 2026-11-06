@@ -1,0 +1,14 @@
+id = "graphs/bfs_reach"
+title = "BFS Reachable Component"
+kind = "network"
+out = "graph_bfs_reach"
+
+[python]
+module = "img_scientific.graphs.graph_bfs_reach"
+
+[params]
+n = 30
+p = 0.05
+seed = 7
+start = 0
+node_size = 900

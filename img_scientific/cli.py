@@ -5,6 +5,7 @@ Sub-commands
 list                 List every chart that has a spec (no plotting deps needed).
 render <id>          Render one chart, optionally overriding parameters.
 gallery [--topic]    Re-render all charts (or one topic) into images/.
+new <id> [...]       Scaffold a chart (spec + Python + Julia) for a new id.
 """
 
 from __future__ import annotations
@@ -12,7 +13,7 @@ from __future__ import annotations
 import argparse
 import sys
 
-from . import _render, _spec
+from . import _render, _scaffold, _spec
 
 
 def _cmd_list(_: argparse.Namespace) -> int:
@@ -41,6 +42,31 @@ def _cmd_gallery(args: argparse.Namespace) -> int:
     return 0
 
 
+def _cmd_new(args: argparse.Namespace) -> int:
+    params = _spec.parse_set(args.param)
+    try:
+        paths = _scaffold.create(
+            args.chart_id,
+            kind=args.kind,
+            title=args.title,
+            out=args.out,
+            params=params,
+            force=args.force,
+        )
+    except _scaffold.ScaffoldError as exc:
+        print(f"error: {exc}", file=sys.stderr)
+        return 2
+    for path in paths:
+        try:
+            shown = path.relative_to(_scaffold.REPO)
+        except ValueError:
+            shown = path
+        print(f"created {shown}")
+    print("\nSkeletons are TODO stubs. Fill in the plotting bodies, then:")
+    print(f"  imgsci render {args.chart_id}")
+    return 0
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="imgsci", description="Scientific plotting toolkit CLI")
     sub = parser.add_subparsers(dest="command", required=True)
@@ -62,6 +88,23 @@ def build_parser() -> argparse.ArgumentParser:
     p_gallery = sub.add_parser("gallery", help="re-render charts into images/")
     p_gallery.add_argument("--topic", help="restrict to one topic, e.g. distrib")
     p_gallery.set_defaults(func=_cmd_gallery)
+
+    p_new = sub.add_parser(
+        "new",
+        help="scaffold a chart (spec + Python @chart make_* + Julia register! make_*)",
+    )
+    p_new.add_argument("chart_id", help="e.g. distrib/geom_pmf")
+    p_new.add_argument("--kind", default="chart", help="chart kind (pmf|pdf|cdf|hist|network|...)")
+    p_new.add_argument("--title", help="chart title (defaults to the id name)")
+    p_new.add_argument("--out", help="output/filename stem (defaults to <topic>_<id>)")
+    p_new.add_argument(
+        "--param",
+        action="append",
+        metavar="KEY=VALUE",
+        help="seed a spec parameter + matching function kwarg (repeatable); lists use commas",
+    )
+    p_new.add_argument("--force", action="store_true", help="overwrite existing scaffold files")
+    p_new.set_defaults(func=_cmd_new)
 
     return parser
 

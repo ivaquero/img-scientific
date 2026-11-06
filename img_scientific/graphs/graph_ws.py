@@ -9,7 +9,7 @@ import numpy as np
 from img_scientific._registry import chart
 from img_scientific._style import set_style
 
-from .path_ring import make_watts_strogatz
+from ._helpers import make_watts_strogatz
 
 
 @chart("graphs/ws_lattice")

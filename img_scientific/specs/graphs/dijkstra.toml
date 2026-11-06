@@ -1,0 +1,13 @@
+id = "graphs/dijkstra"
+title = "Shortest-Path Levels (Dijkstra)"
+kind = "network"
+out = "graph_dijkstra"
+
+[python]
+module = "img_scientific.graphs.graph_dijkstra"
+
+[params]
+n = 15
+k = 4
+source = 0
+node_size = 900

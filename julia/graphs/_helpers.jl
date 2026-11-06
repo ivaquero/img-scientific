@@ -187,6 +187,51 @@ function clustering_coefficient(adj, n)
     isempty(finite) ? NaN : sum(finite) / length(finite)
 end
 
+# --- reachability + connectivity ---------------------------------------------
+
+"""Number of nodes reachable from ``src`` (including ``src`` itself)."""
+reachable_count(adj, n, src) = count(>=(0), bfs_dists(adj, n, src))
+
+"""True when every node is reachable from node 1 (undirected)."""
+is_connected(adj, n) = reachable_count(adj, n, 1) == n
+
+"""Fraction of ``iters`` fresh ``G(n, p)`` draws that are connected."""
+function prob_connected(n, p, iters, rng)
+    hits = 0
+    for _ in 1:iters
+        adj = adjacency(n, er_np_edges(n, p, rng))
+        hits += is_connected(adj, n) ? 1 : 0
+    end
+    hits / iters
+end
+
+"""Vector of reachable-set sizes, one entry per start node."""
+cluster_sizes(adj, n) = [reachable_count(adj, n, src) for src in 1:n]
+
+# --- sampled characteristic path length ---------------------------------------
+
+"""Shortest-path lengths for ``trials`` random node pairs (1-indexed)."""
+function sample_path_lengths(adj, n, rng, trials)
+    n < 2 && return Int[]
+    dist_cache = [bfs_dists(adj, n, src) for src in 1:n]
+    out = Int[]
+    for _ in 1:trials
+        u = rand(rng, 1:n)
+        v = rand(rng, 1:n)
+        if u != v
+            d = dist_cache[u][v]
+            d >= 0 && push!(out, d)
+        end
+    end
+    out
+end
+
+"""Mean of ``sample_path_lengths`` -- a cheap Monte-Carlo characteristic path length."""
+function estimate_path_length(adj, n, rng, trials)
+    ls = sample_path_lengths(adj, n, rng, trials)
+    isempty(ls) ? NaN : sum(ls) / length(ls)
+end
+
 # --- colour helper for the network charts ------------------------------------
 
 const TAB10 = (:steelblue, :orangered, :seagreen, :goldenrod, :mediumorchid,

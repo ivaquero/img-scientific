@@ -1,0 +1,15 @@
+id = "graphs/ws_sampled"
+title = "Sampled Characteristic Path Length L(p)"
+kind = "line"
+out = "graph_ws_sampled"
+
+[python]
+module = "img_scientific.graphs.graph_ws_sampled"
+
+[params]
+n = 80
+k = 10
+iters = 3
+trials = 400
+seed = 42
+ps = [0.001, 0.01, 0.1, 1.0]

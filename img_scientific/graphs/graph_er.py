@@ -9,7 +9,7 @@ import numpy as np
 from img_scientific._registry import chart
 from img_scientific._style import set_style
 
-from .graph_random import all_pairs_undirected
+from ._helpers import all_pairs_undirected
 
 
 def m_pairs(nodes, m, rng):

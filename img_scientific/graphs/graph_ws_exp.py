@@ -8,9 +8,11 @@ import numpy as np
 from img_scientific._registry import chart
 from img_scientific._style import set_style
 
-from .metric_clustering import clustering_coefficient
-from .path_ring import make_watts_strogatz
-from .path_shortest import characteristic_path_length
+from ._helpers import (
+    characteristic_path_length,
+    clustering_coefficient,
+    make_watts_strogatz,
+)
 
 
 def _run_one_graph(n, k, p, rng):

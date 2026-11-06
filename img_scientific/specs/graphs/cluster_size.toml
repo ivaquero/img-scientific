@@ -1,0 +1,12 @@
+id = "graphs/cluster_size"
+title = "Component Size via DFS Reachability"
+kind = "hist"
+out = "graph_cluster_size"
+
+[python]
+module = "img_scientific.graphs.graph_cluster_size"
+
+[params]
+n = 60
+p = 0.04
+seed = 42

@@ -1,29 +1,31 @@
-from os import path
+"""
+Original Author: Xavier Yang
+Link: https://github.com/ivaquero
+"""
 
+import matplotlib.pyplot as plt
 import numpy as np
-from matplotlib import pyplot as plt
 
-plt.style.use("seaborn-v0_8-dark")
-
-
-def categorical(p, k):
-    return p[k]
+from .._registry import chart
+from .._style import set_style
 
 
-n_trials = 100
-p = [0.2, 0.1, 0.7]
+@chart("distrib/categ_pmf")
+def make_categ_pmf(*, n_trials=100, p=(0.2, 0.1, 0.7), seed=42):
+    """Scatter of ``n_trials`` categorical samples for a fixed probability vector."""
+    set_style()
 
-x = np.arange(n_trials)
+    def categorical(p, k):
+        return p[k]
 
-rng = np.random.default_rng(42)
-y = [categorical(p, k=rng.randint(0, len(p) - 1)) for _ in range(n_trials)]
+    x = np.arange(n_trials)
 
-μ, σ = np.mean(y), np.std(y)
+    rng = np.random.default_rng(seed)
+    y = [categorical(p, k=rng.randint(0, len(p) - 1)) for _ in range(n_trials)]
 
-_, ax = plt.subplots()
-ax.scatter(x, y, label=rf"$μ={μ:.2f},\ σ={σ:.2f}$")
-ax.legend()
+    μ, σ = np.mean(y), np.std(y)
 
-filename, extension = path.splitext(path.basename(__file__))
-# plt.savefig(f"../../images/distrs/{filename}.png")
-plt.show()
+    fig, ax = plt.subplots()
+    ax.scatter(x, y, label=rf"$μ={μ:.2f},\ σ={σ:.2f}$")
+    ax.legend()
+    return fig

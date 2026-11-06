@@ -3,30 +3,36 @@ Original Author: Xavier Yang
 Link: https://github.com/ivaquero
 """
 
-from os import path
-
 import matplotlib.pyplot as plt
 import numpy as np
 from scipy import stats
 
-plt.style.use("seaborn-v0_8-dark")
+from .._registry import chart
+from .._style import set_style
 
-dfs = [1, 10, 100]
-alphas = [0.2, 0.2, 0.4]
-colors = ["blue", "green", "orange"]
 
-X = np.linspace(-10, 10, 100)
+@chart("distrib/t_pdf")
+def make_t_pdf(
+    *,
+    dfs=(1, 10, 100),
+    alphas=(0.2, 0.2, 0.4),
+    colors=("blue", "green", "orange"),
+    x_min=-10,
+    x_max=10,
+    x_num=100,
+    title="$t$ Distribution",
+):
+    """Line and fill plot of the analytic Student's t PDF for several ``df`` values."""
+    set_style()
 
-_, ax = plt.subplots()
+    X = np.linspace(x_min, x_max, x_num)
+    fig, ax = plt.subplots()
 
-for df, color, alpha in zip(dfs, colors, alphas, strict=True):
-    y = stats.t.pdf(X, df=df)
-    ax.plot(X, y, label=f"n={df}", color=color, alpha=alpha)
-    ax.fill_between(X, y, color=color, alpha=0.25)
+    for df, color, alpha in zip(dfs, colors, alphas, strict=True):
+        y = stats.t.pdf(X, df=df)
+        ax.plot(X, y, label=f"n={df}", color=color, alpha=alpha)
+        ax.fill_between(X, y, color=color, alpha=0.25)
 
-ax.set(xlabel="X", ylabel="PDF(X)", title="$t$ Distribution")
-ax.legend()
-
-filename, extension = path.splitext(path.basename(__file__))
-# plt.savefig(f"../../images/distrs/{filename}.png")
-plt.show()
+    ax.set(xlabel="X", ylabel="PDF(X)", title=title)
+    ax.legend()
+    return fig

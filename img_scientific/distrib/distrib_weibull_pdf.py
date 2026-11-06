@@ -3,24 +3,33 @@ Original Author: Xavier Yang
 Link: https://github.com/ivaquero
 """
 
-from os import path
-
 import matplotlib.pyplot as plt
 import numpy as np
 from scipy import stats
 
-x = np.arange(0, 2.5, 0.01)
-ks = [0.5, 1, 5]
+from .._registry import chart
+from .._style import set_style
 
-_, ax = plt.subplots()
 
-for k in ks:
-    y = stats.weibull_min(c=k)
-    ax.plot(x, y.pdf(x), label=f"k = {k:0.1f}")
+@chart("distrib/weibull_pdf")
+def make_weibull_pdf(
+    *,
+    ks=(0.5, 1, 5),
+    x_start=0,
+    x_stop=2.5,
+    x_step=0.01,
+    title="Weibull Distribution",
+):
+    """Line plot of the analytic Weibull (minimum) PDF for several ``c`` values."""
+    set_style()
 
-ax.set(xlabel="X", ylabel="PDF(X)", title="Weibull Distribution")
-ax.legend()
+    x = np.arange(x_start, x_stop, x_step)
+    fig, ax = plt.subplots()
 
-filename, extension = path.splitext(path.basename(__file__))
-# plt.savefig(f"../../images/distrs/{filename}.png")
-plt.show()
+    for k in ks:
+        y = stats.weibull_min(c=k)
+        ax.plot(x, y.pdf(x), label=f"k = {k:0.1f}")
+
+    ax.set(xlabel="X", ylabel="PDF(X)", title=title)
+    ax.legend()
+    return fig

@@ -3,33 +3,39 @@ Original Author: Xavier Yang
 Link: https://github.com/ivaquero
 """
 
-from os import path
-
 import matplotlib.pyplot as plt
 import numpy as np
 from scipy import stats
 
-plt.style.use("seaborn-v0_8-dark")
+from .._registry import chart
+from .._style import set_style
 
-locs = [-1, 0, 0]
-scales = [1.5, 1, 0.5]
-colors = ["blue", "green", "orange"]
-alphas = [0.4, 0.4, 0.6]
 
-X = np.linspace(-10, 10, 100)
+@chart("distrib/laplace_pdf")
+def make_laplace_pdf(
+    *,
+    locs=(-1, 0, 0),
+    scales=(1.5, 1, 0.5),
+    colors=("blue", "green", "orange"),
+    alphas=(0.4, 0.4, 0.6),
+    x_min=-10,
+    x_max=10,
+    x_num=100,
+    title="Laplace Distribution",
+):
+    """PDF curves of the Laplace distribution compared with a Gaussian."""
+    set_style()
 
-_, ax = plt.subplots()
+    X = np.linspace(x_min, x_max, x_num)
+    fig, ax = plt.subplots()
 
-for loc, scale, color, alpha in zip(locs, scales, colors, alphas, strict=True):
-    y = stats.laplace(loc=loc, scale=scale).pdf(X)
-    ax.plot(X, y, label=f"μ={loc}, σ={scale}", color=color, alpha=alpha)
-    ax.fill_between(X, y, color=color, alpha=0.25)
+    for loc, scale, color, alpha in zip(locs, scales, colors, alphas, strict=True):
+        y = stats.laplace(loc=loc, scale=scale).pdf(X)
+        ax.plot(X, y, label=f"μ={loc}, σ={scale}", color=color, alpha=alpha)
+        ax.fill_between(X, y, color=color, alpha=0.25)
 
-ax.plot(X, stats.norm.pdf(X), label="Gaussian", color="red", alpha=0.8)
+    ax.plot(X, stats.norm.pdf(X), label="Gaussian", color="red", alpha=0.8)
 
-ax.set(xlabel="X", ylabel="PDF(X)", title="Laplace Distribution")
-ax.legend()
-
-filename, extension = path.splitext(path.basename(__file__))
-# plt.savefig(f"../../images/distrs/{filename}.png")
-plt.show()
+    ax.set(xlabel="X", ylabel="PDF(X)", title=title)
+    ax.legend()
+    return fig

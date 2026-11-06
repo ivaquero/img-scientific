@@ -3,29 +3,35 @@ Original Author: Xavier Yang
 Link: https://github.com/ivaquero
 """
 
-from os import path
-
 import matplotlib.pyplot as plt
 import numpy as np
 from scipy import stats
 
-plt.style.use("seaborn-v0_8-dark")
+from .._registry import chart
+from .._style import set_style
 
-locs = [0.5, 1, 2]
-alphas = [0.4, 0.4, 0.6]
 
-X = np.linspace(0, 10, 100)
+@chart("distrib/expon_pdf")
+def make_expon_pdf(
+    *,
+    locs=(0.5, 1, 2),
+    alphas=(0.4, 0.4, 0.6),
+    x_min=0,
+    x_max=10,
+    x_num=100,
+    title="Exponential Distribution",
+):
+    """PDF curves of the exponential distribution for several ``loc`` values."""
+    set_style()
 
-_, ax = plt.subplots()
+    X = np.linspace(x_min, x_max, x_num)
+    fig, ax = plt.subplots()
 
-for loc, alpha in zip(locs, alphas, strict=True):
-    y = stats.expon.pdf(X, loc=loc)
-    ax.plot(X, y, label=f"n={loc}", alpha=alpha)
-    ax.fill_between(X, y, alpha=0.25)
+    for loc, alpha in zip(locs, alphas, strict=True):
+        y = stats.expon.pdf(X, loc=loc)
+        ax.plot(X, y, label=f"n={loc}", alpha=alpha)
+        ax.fill_between(X, y, alpha=0.25)
 
-ax.set(xlabel="X", ylabel="PDF(X)", title="Exponential Distribution")
-ax.legend()
-
-filename, extension = path.splitext(path.basename(__file__))
-# plt.savefig(f"../../images/distrs/{filename}.png")
-plt.show()
+    ax.set(xlabel="X", ylabel="PDF(X)", title=title)
+    ax.legend()
+    return fig

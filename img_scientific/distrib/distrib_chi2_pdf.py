@@ -3,29 +3,35 @@ Original Author: Xavier Yang
 Link: https://github.com/ivaquero
 """
 
-from os import path
-
 import matplotlib.pyplot as plt
 import numpy as np
 from scipy import stats
 
-plt.style.use("seaborn-v0_8-dark")
+from .._registry import chart
+from .._style import set_style
 
-locs = [0.5, 1, 2.5]
-alphas = [0.4, 0.4, 0.6]
 
-X = np.linspace(0, 10, 100)
+@chart("distrib/chi2_pdf")
+def make_chi2_pdf(
+    *,
+    locs=(0.5, 1, 2.5),
+    alphas=(0.4, 0.4, 0.6),
+    x_min=0,
+    x_max=10,
+    x_num=100,
+    title="$χ^2$ Distribution",
+):
+    """Line and fill plot of the analytic chi-squared PDF for several ``df`` values."""
+    set_style()
 
-_, ax = plt.subplots()
+    X = np.linspace(x_min, x_max, x_num)
+    fig, ax = plt.subplots()
 
-for loc, alpha in zip(locs, alphas, strict=True):
-    y = stats.chi2.pdf(X, df=loc)
-    ax.plot(X, y, label=f"n={loc}", alpha=alpha)
-    ax.fill_between(X, y, alpha=0.25)
+    for loc, alpha in zip(locs, alphas, strict=True):
+        y = stats.chi2.pdf(X, df=loc)
+        ax.plot(X, y, label=f"n={loc}", alpha=alpha)
+        ax.fill_between(X, y, alpha=0.25)
 
-ax.set(xlabel="X", ylabel="PDF(X)", title="$χ^2$ Distribution")
-ax.legend()
-
-filename, extension = path.splitext(path.basename(__file__))
-# plt.savefig(f"../../images/distrs/{filename}.png")
-plt.show()
+    ax.set(xlabel="X", ylabel="PDF(X)", title=title)
+    ax.legend()
+    return fig

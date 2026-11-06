@@ -1,0 +1,11 @@
+id = "graphs/regular"
+title = "Regular Graph"
+kind = "network"
+module = "img_scientific.graphs.path_regular"
+out = "path_regular"
+
+[params]
+n = 10
+k = 3
+node_color = "C4"
+node_size = 1000

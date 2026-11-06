@@ -1,0 +1,13 @@
+id = "graphs/ws_lattice"
+title = "Watts-Strogatz Rewiring"
+kind = "network"
+module = "img_scientific.graphs.graph_ws"
+out = "graph_ws"
+
+[params]
+n = 10
+k = 4
+ps = [0.0, 0.2, 1.0]
+seed = 42
+node_color = "red"
+node_size = 200

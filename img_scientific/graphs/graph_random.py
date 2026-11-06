@@ -1,33 +1,50 @@
+"""Undirected pair enumeration + G(n, p) random graph helper and chart."""
+
+from __future__ import annotations
+
 import matplotlib.pyplot as plt
 import networkx as nx
 import numpy as np
 
+from img_scientific._registry import chart
+from img_scientific._style import set_style
+
 
 def all_pairs_undirected(nodes):
+    """Yield each unordered pair ``(u, v)`` exactly once (``i < j``)."""
     for i, u in enumerate(nodes):
         for j, v in enumerate(nodes):
             if i < j:
                 yield u, v
 
 
-def random_pairs_undirected(nodes, p, seed=42):
-    rng = np.random.default_rng(seed)
+def random_pairs_undirected(nodes, p, rng):
+    """Keep each undirected pair independently with probability ``p``."""
     for edge in all_pairs_undirected(nodes):
         if rng.random() < p:
             yield edge
 
 
-def make_random_graph(n, p, seed=42):
-    _ = np.random.default_rng(seed)
-    G = nx.Graph()
+def make_random_graph(n, p, rng):
+    """Erdős–Rényi G(n, p): ``n`` nodes, every edge present with prob ``p``."""
+    g = nx.Graph()
     nodes = range(n)
-    G.add_nodes_from(nodes)
-    G.add_edges_from(random_pairs_undirected(nodes, p))
-    return G
+    g.add_nodes_from(nodes)
+    g.add_edges_from(random_pairs_undirected(nodes, p, rng))
+    return g
 
 
-random_graph = make_random_graph(10, 0.3)
-len(random_graph.edges())  # 18
+@chart("graphs/random_graph")
+def make_graph_random(
+    *, n=10, p=0.3, seed=42, node_color="C3", node_size=1000, title="Erdős–Rényi G(n, p)"
+):
+    """Circular layout of an Erdős–Rényi G(n, p) random graph."""
+    set_style()
 
-nx.draw_circular(random_graph, node_color="C3", node_size=1000, with_labels=True)
-plt.show()
+    rng = np.random.default_rng(seed)
+    g = make_random_graph(n, p, rng)
+
+    fig, ax = plt.subplots(figsize=(6, 6))
+    nx.draw_circular(g, ax=ax, node_color=node_color, node_size=node_size, with_labels=True)
+    ax.set(title=title)
+    return fig

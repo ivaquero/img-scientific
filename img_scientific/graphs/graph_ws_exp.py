@@ -1,46 +1,61 @@
+"""Small-world experiment chart: normalized clustering C(p) and path length L(p)."""
+
+from __future__ import annotations
+
 import matplotlib.pyplot as plt
-import networkx as nx
 import numpy as np
+
+from img_scientific._registry import chart
+from img_scientific._style import set_style
+
 from .metric_clustering import clustering_coefficient
+from .path_ring import make_watts_strogatz
 from .path_shortest import characteristic_path_length
 
 
-def run_one_graph(n, k, p):
-    ws = nx.watts_strogatz_graph(n, k, p)
-    mpl = characteristic_path_length(ws)
-    cc = clustering_coefficient(ws)
-    # tuple of (mean path length, clustering coefficient)
-    return mpl, cc
+def _run_one_graph(n, k, p, rng):
+    ws = make_watts_strogatz(n, k, p, rng)
+    return characteristic_path_length(ws), clustering_coefficient(ws)
 
 
-ps = np.logspace(-4, 0, 9)
-
-
-def run_experiment(ps, n=1000, k=10, iters=20):
+def _run_experiment(ps, n, k, iters, rng):
     res = []
     for p in ps:
-        print(p)
-        t = [run_one_graph(n, k, p) for _ in range(iters)]
-        means = np.array(t).mean(axis=0)
-        print(means)
-        res.append(means)
+        trials = np.array([_run_one_graph(n, k, p, rng) for _ in range(iters)])
+        res.append(trials.mean(axis=0))
     return np.array(res)
 
 
-res = run_experiment(ps)
-L, C = np.transpose(res)
-L /= L[0]
-C /= C[0]
-
-_, ax = plt.subplots()
-
-ax.plot(ps, C, "s-", lw=1, label="C(p) / C(0)")
-ax.plot(ps, L, "o-", lw=1, label="L(p) / L(0)")
-ax.set(
-    xlabel="Rewiring probability (p)",
-    xscale="log",
+@chart("graphs/ws_experiment")
+def make_graph_ws_exp(
+    *,
+    n=100,
+    k=10,
+    iters=3,
+    ps=(0.0001, 0.001, 0.01, 0.1, 1.0),
+    seed=42,
     title="Normalized clustering coefficient and path length",
-    xlim=(0.00009, 1.1),
-    ylim=(-0.01, 1.01),
-)
-plt.show()
+):
+    """Both metrics divided by their ring-lattice value: the small-world window."""
+    set_style()
+
+    rng = np.random.default_rng(seed)
+    ps = list(ps)
+
+    res = _run_experiment(ps, n, k, iters, rng)
+    length, coeff = res[:, 0], res[:, 1]
+    length = length / length[0]
+    coeff = coeff / coeff[0]
+
+    fig, ax = plt.subplots(figsize=(7, 4))
+    ax.plot(ps, coeff, "s-", lw=1, label="C(p) / C(0)")
+    ax.plot(ps, length, "o-", lw=1, label="L(p) / L(0)")
+    ax.set(
+        xlabel="Rewiring probability (p)",
+        xscale="log",
+        xlim=(0.00009, 1.1),
+        ylim=(-0.01, 1.01),
+        title=title,
+    )
+    ax.legend()
+    return fig

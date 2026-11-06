@@ -1,9 +1,10 @@
-from .path_ring import make_ring_lattice
+"""Breadth-first reachable-node set helper (complexity O(n + m))."""
 
-# 该版本复杂度为 O(n + m)
+from __future__ import annotations
 
 
-def reachable_nodes_bfs(G, start):
+def reachable_nodes_bfs(g, start):
+    """Return every node reachable from ``start`` using a level-order BFS."""
     seen = set()
     nextlevel = {start}
     while nextlevel:
@@ -12,9 +13,5 @@ def reachable_nodes_bfs(G, start):
         for v in thislevel:
             if v not in seen:
                 seen.add(v)
-                nextlevel.update(G[v])
+                nextlevel.update(g[v])
     return seen
-
-
-lattice = make_ring_lattice(10, 4)
-reachable_nodes_bfs(lattice, 0)  # {0, 1, 2, 3, 4, 5, 6, 7, 8, 9}

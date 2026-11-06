@@ -1,0 +1,12 @@
+id = "graphs/random_graph"
+title = "Erdős–Rényi G(n, p)"
+kind = "network"
+module = "img_scientific.graphs.graph_random"
+out = "graph_random"
+
+[params]
+n = 10
+p = 0.3
+seed = 42
+node_color = "C3"
+node_size = 1000

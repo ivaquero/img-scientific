@@ -1,0 +1,12 @@
+id = "graphs/ws_experiment"
+title = "Normalized clustering coefficient and path length"
+kind = "curve"
+module = "img_scientific.graphs.graph_ws_exp"
+out = "graph_ws_exp"
+
+[params]
+n = 100
+k = 10
+iters = 3
+ps = [0.0001, 0.001, 0.01, 0.1, 1.0]
+seed = 42

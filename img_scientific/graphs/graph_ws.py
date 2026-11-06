@@ -1,41 +1,52 @@
+"""Watts-Strogatz small-world rewiring row chart."""
+
+from __future__ import annotations
+
 import matplotlib.pyplot as plt
 import networkx as nx
 import numpy as np
 
+from img_scientific._registry import chart
+from img_scientific._style import set_style
 
-def rewire(G, p):
-    nodes = set(G)
-    rng = np.random.default_rng(42)
-    for u, v in G.edges():
-        if rng.random() < p:
-            choices = nodes - {u} - set(G[u])
-            new_v = rng.choice(list(choices))
-            G.remove_edge(u, v)
-            G.add_edge(u, new_v)
+from .path_ring import make_watts_strogatz
 
 
-def draw(g, node_size=800, font_size=16):
-    nx.draw(
-        g,
-        with_labels=True,
-        pos=nx.circular_layout(g),
-        node_color="red",
-        node_size=node_size,
-        font_color="white",
-        font_size=font_size,
-        font_weight="bold",
-    )
+@chart("graphs/ws_lattice")
+def make_graph_ws(
+    *,
+    n=10,
+    k=4,
+    ps=(0.0, 0.2, 1.0),
+    seed=42,
+    node_color="red",
+    node_size=200,
+    title="Watts-Strogatz Rewiring",
+):
+    """One ring lattice (``p=0``) to one random graph (``p=1``) per panel."""
+    set_style()
 
+    rng = np.random.default_rng(seed)
+    ps = list(ps)
 
-n = 10
-k = 4
-ps = [0, 0.2, 1.0]
+    fig, axes = plt.subplots(1, len(ps), figsize=(4 * len(ps), 4), constrained_layout=True)
+    axes = np.atleast_1d(axes).flatten()
 
-_, axes = plt.subplots(1, 3, figsize=(12, 6), constrained_layout=True)
+    for p, ax in zip(ps, axes, strict=True):
+        g = make_watts_strogatz(n, k, p, rng)
+        pos = nx.circular_layout(g)
+        nx.draw(
+            g,
+            ax=ax,
+            pos=pos,
+            with_labels=True,
+            node_color=node_color,
+            node_size=node_size,
+            font_color="white",
+            font_weight="bold",
+        )
+        ax.set(title=f"p = {p:g}")
+        ax.axis("equal")
 
-for p, ax in zip(ps, axes.flatten()):
-    g = nx.random_graphs.watts_strogatz_graph(n, k, p)
-    draw(g, node_size=200, font_size=12)
-    ax.axis("equal")
-
-plt.show()
+    fig.suptitle(title)
+    return fig

@@ -43,6 +43,9 @@ const COLOR_MAP = Dict(
     "purple" => :mediumorchid,
     "brown" => :brown,
     "black" => :black,
+    "lightgray" => :lightgray,
+    "white" => :white,
+    "violet" => :violet,
 )
 to_color(s) = get(COLOR_MAP, string(s), pal(2))
 

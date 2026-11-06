@@ -8,18 +8,16 @@ function make_func_logit_odds(p::AbstractDict)
 
     fig = Figure(resolution = (700, 400))
 
-    ax_left = Axis(fig[1, 1]; xlabel = "probability p", ylabel = "logit(p)",
-                   xlim = (pmin, pmax), title = p["title"])
-    lines!(ax_left, xs, logits; color = to_color(p["logit_color"]), label = "logit(p)")
+    ax_odds = Axis(fig[1, 1]; xlabel = "probability", ylabel = "odds",
+                   xlim = (pmin, pmax), ylim = (0, odds[end]),
+                   title = p["title"])
+    lines!(ax_odds, xs, odds; color = to_color(p["odds_color"]))
 
-    ax_right = Axis(fig[1, 1]; ylabel = "odds(p) = p / (1 - p)",
-                    yscale = log10, yaxisposition = :right)
-    lines!(ax_right, xs, odds; color = to_color(p["odds_color"]), linestyle = :dash,
-           label = "odds(p)")
+    ax_right = Axis(fig[1, 1]; ylabel = "logit", yaxisposition = :right,
+                    limits = (pmin, pmax, logits[begin], logits[end]))
+    lines!(ax_right, xs, logits; color = to_color(p["logit_color"]))
     ax_right.xgridvisible = false
     ax_right.ygridvisible = false
-
-    axislegend(ax_left; position = :lt)
     fig
 end
 

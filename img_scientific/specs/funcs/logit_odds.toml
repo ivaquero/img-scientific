@@ -10,5 +10,5 @@ module = "img_scientific.funcs.func_logit_odds"
 p_min = 0.01
 p_max = 0.99
 p_num = 201
-logit_color = "blue"
-odds_color = "red"
+logit_color = "orange"
+odds_color = "blue"

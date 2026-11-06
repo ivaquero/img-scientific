@@ -1,6 +1,6 @@
 import numpy as np
-from graph_random import all_pairs_undirected
-from path_ring import make_ring_lattice
+from .graph_random import all_pairs_undirected
+from .path_ring import make_ring_lattice
 from scipy.special import comb
 
 

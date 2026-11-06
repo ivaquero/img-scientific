@@ -1,0 +1,13 @@
+id = "distrib/bin_pmf"
+title = "Binomial Distribution"
+kind = "pmf"
+module = "img_scientific.distrib.distrib_bin_pmf"
+out = "distrib_bin_pmf"
+
+[params]
+ns = [10, 20, 20, 40]
+ps = [0.2, 0.1, 0.2, 0.2]
+alphas = [0.2, 0.4, 0.6, 0.8]
+x_start = 0
+x_stop = 21
+x_step = 1

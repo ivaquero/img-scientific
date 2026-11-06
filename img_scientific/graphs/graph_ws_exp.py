@@ -1,8 +1,8 @@
 import matplotlib.pyplot as plt
 import networkx as nx
 import numpy as np
-from metric_clustering import clustering_coefficient
-from path_shortest import characteristic_path_length
+from .metric_clustering import clustering_coefficient
+from .path_shortest import characteristic_path_length
 
 
 def run_one_graph(n, k, p):

@@ -1,0 +1,14 @@
+id = "distrib/norm_pdf"
+title = "Normal Distribution"
+kind = "pdf"
+module = "img_scientific.distrib.distrib_norm_pdf"
+out = "distrib_norm_pdf"
+
+[params]
+locs = [-1, 0, 0]
+scales = [1, 1, 2]
+colors = ["blue", "green", "orange"]
+alphas = [0.4, 0.4, 0.6]
+x_min = -10
+x_max = 10
+x_num = 100

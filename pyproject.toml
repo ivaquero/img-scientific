@@ -1,11 +1,15 @@
 [project]
-name = "tutti"
+name = "img-scientific"
 version = "0.1.0"
-description = "Exam Simulator"
+description = "Reproducible teaching plotting toolkit for statistics and graph-theory charts under different parameters"
 readme = "README.md"
-requires-python = ">=3.14"
+requires-python = ">=3.10"
+authors = [{ name = "ivaquero" }]
 dependencies = [
-  "defusedxml>=0.7.1",
+  "matplotlib>=3.8",
+  "networkx>=3.2",
+  "numpy>=1.26",
+  "scipy>=1.11",
 ]
 
 [project.optional-dependencies]
@@ -13,19 +17,24 @@ dev = [
   "ruff>=0.15.11",
 ]
 
+# NOTE (P1): the `imgsci` console entry point will be added here as
+# [project.scripts] -> "imgsci = img_scientific.cli:main"
+# once img_scientific/cli.py is implemented. It is intentionally omitted in
+# this P0 step so the package never advertises a command that does not yet exist.
+
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [tool.hatch.build.targets.wheel]
-packages = ["backend"]
+packages = ["img_scientific"]
 
 [tool.pyrefly]
-search-path = ["backend"]
+search-path = ["img_scientific"]
 
 [tool.ruff]
 fix = true
-target-version = "py314"
+target-version = "py310"
 line-length = 88
 
 [tool.ruff.format]

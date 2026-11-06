@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
 import networkx as nx
-from path_ring import adjacent_edges
+from .path_ring import adjacent_edges
 
 
 def opposite_edges(nodes):

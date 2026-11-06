@@ -1,4 +1,4 @@
-from path_ring import make_ring_lattice
+from .path_ring import make_ring_lattice
 
 # 该版本复杂度为 O(n + m)
 

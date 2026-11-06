@@ -1,7 +1,7 @@
 import random
 
 import networkx as nx
-from graph_random import all_pairs_undirected
+from .graph_random import all_pairs_undirected
 
 
 def m_pairs(nodes, m):

@@ -6,8 +6,8 @@ Link: https://github.com/ivaquero
 from os import path
 
 import matplotlib.pyplot as plt
-from metric_cov_ellipse import plot_cov_ellipse
-from metric_utils import multi_gaussian_product
+from .metric_cov_ellipse import plot_cov_ellipse
+from .metric_utils import multi_gaussian_product
 
 P0 = [[6, 0], [0, 6]]
 P1 = [[2, 1.9], [1.9, 2]]

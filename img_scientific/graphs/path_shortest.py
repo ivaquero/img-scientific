@@ -1,6 +1,6 @@
 import networkx as nx
 import numpy as np
-from path_ring import make_ring_lattice
+from .path_ring import make_ring_lattice
 
 
 def path_lengths(G):

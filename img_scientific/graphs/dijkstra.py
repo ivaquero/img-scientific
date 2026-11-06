@@ -1,5 +1,6 @@
 import networkx as nx
-from path_ring import make_ring_lattice
+
+from .path_ring import make_ring_lattice
 
 
 def shortest_path_dijkstra(G, source):

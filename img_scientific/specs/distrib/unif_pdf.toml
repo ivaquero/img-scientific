@@ -1,0 +1,13 @@
+id = "distrib/unif_pdf"
+title = "Uniform Distribution"
+kind = "pdf"
+module = "img_scientific.distrib.distrib_unif_pdf"
+out = "distrib_unif_pdf"
+
+[params]
+locs = [0, 0, 1, -1]
+scales = [1, 2, 2, 2]
+alphas = [0.4, 0.4, 0.6, 0.6]
+x_min = -4
+x_max = 4
+x_num = 100

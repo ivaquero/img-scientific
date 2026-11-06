@@ -1,0 +1,13 @@
+id = "distrib/nbinom_pmf"
+title = "Negative Binomial Distribution"
+kind = "pmf"
+module = "img_scientific.distrib.distrib_nbinom_pmf"
+out = "distrib_nbinom_pmf"
+
+[params]
+ns = [10, 20, 20, 40]
+ps = [0.8, 0.4, 0.8, 0.8]
+alphas = [0.2, 0.4, 0.6, 0.8]
+x_start = 0
+x_stop = 26
+x_step = 1

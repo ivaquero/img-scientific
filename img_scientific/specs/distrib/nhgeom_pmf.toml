@@ -1,0 +1,14 @@
+id = "distrib/nhgeom_pmf"
+title = "Negative Hypergeomic Distribution"
+kind = "pmf"
+module = "img_scientific.distrib.distrib_nhgeom_pmf"
+out = "distrib_nhgeom_pmf"
+
+[params]
+Ns = [10, 20, 20, 40, 40]
+Ms = [2, 4, 4, 16, 32]
+rs = [2, 2, 4, 16, 16]
+alphas = [0.2, 0.2, 0.4, 0.6, 0.6]
+x_start = 0
+x_stop = 26
+x_step = 1

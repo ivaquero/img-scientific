@@ -1,0 +1,12 @@
+id = "distrib/expon_pdf"
+title = "Exponential Distribution"
+kind = "pdf"
+module = "img_scientific.distrib.distrib_expon_pdf"
+out = "distrib_expon_pdf"
+
+[params]
+locs = [0.5, 1, 2]
+alphas = [0.4, 0.4, 0.6]
+x_min = 0
+x_max = 10
+x_num = 100

@@ -1,0 +1,14 @@
+id = "distrib/laplace_cdf"
+title = "Laplace Distribution"
+kind = "cdf"
+module = "img_scientific.distrib.distrib_laplace_cdf"
+out = "distrib_laplace_cdf"
+
+[params]
+locs = [-1, 0, 0]
+scales = [1.5, 1, 0.5]
+colors = ["blue", "green", "orange"]
+alphas = [0.4, 0.4, 0.6]
+x_min = -10
+x_max = 10
+x_num = 100

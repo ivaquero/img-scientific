@@ -1,0 +1,14 @@
+id = "distrib/norm3d"
+title = "3D Normal Distribution"
+kind = "other"
+module = "img_scientific.distrib.distrib_norm3d"
+out = "distrib_norm3d"
+
+[params]
+xs = [[1.0, 0.0], [2.0, 1.0], [2.0, 1.0], [5.0, 1.0]]
+ps = [[[1.0, 0.5], [0.5, 1.0]], [[1.0, 0.5], [0.5, 1.0]], [[1.0, 0.5], [0.5, 1.0]], [[1.0, 0.5], [0.5, 1.0]]]
+x_range = [-5, 25]
+y_range = [-5, 5]
+n = 75
+elev = 40.0
+azim = 230

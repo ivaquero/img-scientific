@@ -1,0 +1,13 @@
+id = "distrib/t_pdf"
+title = "$t$ Distribution"
+kind = "pdf"
+module = "img_scientific.distrib.distrib_t_pdf"
+out = "distrib_t_pdf"
+
+[params]
+dfs = [1, 10, 100]
+alphas = [0.2, 0.2, 0.4]
+colors = ["blue", "green", "orange"]
+x_min = -10
+x_max = 10
+x_num = 100

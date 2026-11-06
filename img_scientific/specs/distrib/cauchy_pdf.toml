@@ -1,0 +1,13 @@
+id = "distrib/cauchy_pdf"
+title = "Cauchy Distribution"
+kind = "pdf"
+module = "img_scientific.distrib.distrib_cauchy_pdf"
+out = "distrib_cauchy_pdf"
+
+[params]
+locs = [0, 1, 2]
+colors = ["blue", "green", "orange"]
+alphas = [0.2, 0.2, 0.4]
+x_min = -10
+x_max = 10
+x_num = 100

@@ -1,0 +1,14 @@
+id = "distrib/norm_cdf"
+title = "Normal Distribution"
+kind = "cdf"
+module = "img_scientific.distrib.distrib_norm_cdf"
+out = "distrib_norm_cdf"
+
+[params]
+locs = [-1, 0, 0]
+scales = [1, 1, 2]
+colors = ["blue", "green", "orange"]
+alphas = [0.4, 0.4, 0.6]
+x_min = -10
+x_max = 10
+x_num = 100

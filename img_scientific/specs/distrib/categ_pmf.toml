@@ -1,0 +1,10 @@
+id = "distrib/categ_pmf"
+title = "Categorical Distribution"
+kind = "other"
+module = "img_scientific.distrib.distrib_categ_pmf"
+out = "distrib_categ_pmf"
+
+[params]
+n_trials = 100
+p = [0.2, 0.1, 0.7]
+seed = 42

@@ -1,0 +1,11 @@
+id = "distrib/weibull_pdf"
+title = "Weibull Distribution"
+kind = "pdf"
+module = "img_scientific.distrib.distrib_weibull_pdf"
+out = "distrib_weibull_pdf"
+
+[params]
+ks = [0.5, 1, 5]
+x_start = 0
+x_stop = 2.5
+x_step = 0.01

@@ -1,0 +1,12 @@
+id = "metric/entropy"
+title = "Discrete Entropy (empirical vs. true vs. uniform)"
+kind = "stem"
+module = "img_scientific.metric.metric_entropy"
+out = "metric_entropy"
+
+[params]
+n = 10
+p = 0.75
+x_max = 10
+rvs_size = 200
+seed = 42

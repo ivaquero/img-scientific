@@ -39,6 +39,7 @@ const COLOR_MAP = Dict(
     "green" => :seagreen,
     "orange" => :darkorange,
     "red" => :orangered,
+    "yellow" => :yellow,
     "purple" => :mediumorchid,
     "brown" => :brown,
     "black" => :black,

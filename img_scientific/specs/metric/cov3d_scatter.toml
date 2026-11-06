@@ -1,0 +1,12 @@
+id = "metric/cov3d_scatter"
+title = "3D Covariance Scatter + Marginal Contours"
+kind = "scatter3d"
+module = "img_scientific.metric.metric_cov3d_scatter"
+out = "metric_cov3d_scatter"
+
+[params]
+mean = [2.0, 7.0]
+cov = [[8.0, 0.0], [0.0, 3.0]]
+count = 1000
+grid = 40
+seed = 42

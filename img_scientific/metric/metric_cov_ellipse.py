@@ -4,11 +4,13 @@ Link: https://github.com/ivaquero
 """
 
 import math
-from os import path
 
-import matplotlib.patches as patches
 import matplotlib.pyplot as plt
 import numpy as np
+from matplotlib import patches
+
+from img_scientific._registry import chart
+from img_scientific._style import set_style
 
 
 def covariance_ellipse(cov, deviations=1):
@@ -68,15 +70,30 @@ def plot_cov_ellipse(
         )
         ax.plot([x, x + w * math.cos(a)], [y, y + w * math.sin(a)])
 
-    ax.set(title=f"[{cov[0]}\n   {cov[1]}]")
 
+@chart("metric/cov_ellipse")
+def make_cov_ellipse(
+    *,
+    mean=(2, 7),
+    cov=((2, 0), (0, 2)),
+    stds=(1, 2, 3),
+    edgecolor="darkslateblue",
+    facecolor="green",
+    alpha=0.2,
+    title="Covariance Ellipse",
+):
+    """Covariance ellipse of a 2x2 matrix at several standard-deviation rings."""
+    set_style()
 
-_, ax = plt.subplots()
-mean = [2, 7]
-P = [[2, 0], [0, 2]]
-std = [1, 2, 3]
-plot_cov_ellipse(ax, mean, P, stds=std)
-
-filename, extension = path.splitext(path.basename(__file__))
-# plt.savefig(f"../../images/funcs/{filename}.png")
-plt.show()
+    fig, ax = plt.subplots()
+    plot_cov_ellipse(
+        ax,
+        list(mean),
+        [list(r) for r in cov],
+        stds=list(stds),
+        edgecolor=edgecolor,
+        facecolor=facecolor,
+        alpha=alpha,
+    )
+    ax.set(xlabel="x", ylabel="y", title=title)
+    return fig

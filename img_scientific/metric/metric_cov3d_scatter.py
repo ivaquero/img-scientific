@@ -4,18 +4,21 @@ Link: https://github.com/ivaquero
 """
 
 import math
-from os import path
 
 import matplotlib.pyplot as plt
-import metric_cov_ellipse
 import numpy as np
 from matplotlib import cm
 from scipy import stats
 
+from img_scientific._registry import chart
+from img_scientific._style import set_style
 
-def plot_cov3d_scatter(ax, mean, cov):
+from .metric_cov_ellipse import covariance_ellipse
+
+
+def plot_cov3d_scatter(ax, mean, cov, count=1000, grid=40, rng=None):
     # get orientation, width, height of covariance ellipse
-    o, w, h = metric_cov_ellipse.covariance_ellipse(cov, 3)
+    o, w, h = covariance_ellipse(cov, 3)
     # rotate width and height to x, y axis
     wx = abs(w * math.cos(o) + h * math.sin(o)) * 1.2
     wy = abs(h * math.cos(o) - w * math.sin(o)) * 1.2
@@ -27,13 +30,12 @@ def plot_cov3d_scatter(ax, mean, cov):
     miny = mean[1] - w
     maxy = mean[1] + w
 
-    xs = np.arange(minx, maxx, (maxx - minx) / 40.0)
-    ys = np.arange(miny, maxy, (maxy - miny) / 40.0)
+    xs = np.arange(minx, maxx, (maxx - minx) / grid)
+    ys = np.arange(miny, maxy, (maxy - miny) / grid)
     xv, yv = np.meshgrid(xs, ys)
 
     multinorm = stats.multivariate_normal(mean, cov)
-    count = 1000
-    x, y = multinorm.rvs(size=count).T
+    x, y = multinorm.rvs(size=count, random_state=rng).T
 
     zs = np.array(
         [
@@ -66,14 +68,29 @@ def plot_cov3d_scatter(ax, mean, cov):
     ax.contour(xv, yv, zv, zdir="y", offset=maxy, cmap=cm.binary)
 
 
-mu = [2.0, 7.0]
-P = [[8.0, 0.0], [0.0, 3.0]]
+@chart("metric/cov3d_scatter")
+def make_cov3d_scatter(
+    *,
+    mean=(2.0, 7.0),
+    cov=((8.0, 0.0), (0.0, 3.0)),
+    count=1000,
+    grid=40,
+    seed=42,
+    title="3D Covariance Scatter + Marginal Contours",
+):
+    """Scatter of a bivariate normal lifted to z=0 with projected marginal PDFs."""
+    set_style()
 
-fig = plt.figure()
-ax = fig.add_subplot(111, projection="3d")
-plot_cov3d_scatter(ax, mu, P)
-ax.set(xlabel="X", ylabel="Y")
-
-filename, extension = path.splitext(path.basename(__file__))
-# plt.savefig(f"../../images/funcs/{filename}.png")
-plt.show()
+    rng = np.random.default_rng(seed)
+    fig = plt.figure()
+    ax = fig.add_subplot(projection="3d")
+    plot_cov3d_scatter(
+        ax,
+        list(mean),
+        np.array([list(r) for r in cov], dtype=float),
+        count=count,
+        grid=grid,
+        rng=rng,
+    )
+    ax.set(xlabel="X", ylabel="Y", title=title)
+    return fig

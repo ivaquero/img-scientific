@@ -1,0 +1,14 @@
+id = "metric/cov3d"
+title = "3D Covariance Ellipsoid"
+kind = "surface3d"
+module = "img_scientific.metric.metric_cov3d"
+out = "metric_cov3d"
+
+[params]
+mean = [0.3, 5.0, 10.0]
+cov = [[1.0, 0.03, 0.2], [0.03, 4.0, 0.0], [0.2, 0.0, 16.1]]
+std = 3
+alpha = 0.4
+n = 60
+n_samples = 1000
+seed = 42

@@ -1,0 +1,10 @@
+id = "metric/cov_prod"
+title = "Bayesian Gaussian Product"
+kind = "ellipse"
+module = "img_scientific.metric.metric_cov_prod"
+out = "metric_cov_prod"
+
+[params]
+mean = [10, 10]
+cov_prior = [[6, 0], [0, 6]]
+cov_likelihood = [[2, 1.9], [1.9, 2]]

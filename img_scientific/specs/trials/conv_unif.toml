@@ -1,0 +1,11 @@
+id = "trials/conv_unif"
+title = "Histogram of $T = X + Y$"
+kind = "hist"
+module = "img_scientific.trials.conv_unif"
+out = "conv_unif"
+
+[params]
+n_trials = 100000
+bins = 20
+seed = 42
+color = "blue"

@@ -9,16 +9,12 @@ import matplotlib.pyplot as plt
 import numpy as np
 from scipy import special
 
-from .._registry import chart
-from .._style import set_style
+from img_scientific._registry import chart
+from img_scientific._style import set_style
 
 
 @chart("distrib/multinom_pmf")
-def make_multinom_pmf(
-    *,
-    n_trials_list=(20, 21, 22),
-    title="Multinomial Distribution",
-):
+def make_multinom_pmf(*, n_trials_list=(20, 21, 22), title="Multinomial Distribution"):
     """Scatter of analytic multinomial coefficients for several trial counts."""
     set_style()
 

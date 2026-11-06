@@ -1,0 +1,12 @@
+id = "trials/norm_pdf_cdf"
+title = "Normal PDF and CDF"
+kind = "pdf"
+module = "img_scientific.trials.stats_norm_pdf_cdf"
+out = "stats_norm_pdf_cdf"
+
+[params]
+loc = 0.0
+scale = 1.0
+x_min = -4.0
+x_max = 4.0
+x_num = 201

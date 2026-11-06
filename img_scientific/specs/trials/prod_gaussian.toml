@@ -1,0 +1,14 @@
+id = "trials/prod_gaussian"
+title = "Product of Two Gaussians"
+kind = "pdf"
+module = "img_scientific.trials.prod_gaussian"
+out = "prod_gaussian"
+
+[params]
+mean_1 = 1.0
+var_1 = 10.0
+mean_2 = 5.0
+var_2 = 5.0
+x_min = -15.0
+x_max = 15.0
+x_num = 100

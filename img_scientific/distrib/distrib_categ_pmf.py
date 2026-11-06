@@ -6,8 +6,8 @@ Link: https://github.com/ivaquero
 import matplotlib.pyplot as plt
 import numpy as np
 
-from .._registry import chart
-from .._style import set_style
+from img_scientific._registry import chart
+from img_scientific._style import set_style
 
 
 @chart("distrib/categ_pmf")

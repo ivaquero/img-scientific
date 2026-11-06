@@ -3,19 +3,22 @@ Original Author: Xavier Yang
 Link: https://github.com/ivaquero
 """
 
-from os import path
-
 import matplotlib.pyplot as plt
 import numpy as np
 from scipy.special import expit as logistic
 
-z = np.linspace(-8, 8)
+from img_scientific._registry import chart
+from img_scientific._style import set_style
 
-_, ax = plt.subplots()
 
-ax.plot(z, logistic(z))
-ax.set(xlabel="z", ylabel="logistic(z)")
+@chart("funcs/sigmoid")
+def make_sigmoid(*, z_min=-8.0, z_max=8.0, z_num=50, color="blue", title="Sigmoid"):
+    """Logistic (sigmoid) curve ``logistic(z) = 1 / (1 + exp(-z))``."""
+    set_style()
 
-filename, extension = path.splitext(path.basename(__file__))
-# plt.savefig(f"../../images/funcs/{filename}.png")
-plt.show()
+    z = np.linspace(z_min, z_max, z_num)
+    fig, ax = plt.subplots()
+
+    ax.plot(z, logistic(z), color=color)
+    ax.set(xlabel="z", ylabel="logistic(z)", title=title)
+    return fig

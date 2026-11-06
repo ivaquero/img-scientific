@@ -8,8 +8,8 @@ import numpy as np
 from matplotlib import cm
 from scipy import stats
 
-from .._registry import chart
-from .._style import set_style
+from img_scientific._registry import chart
+from img_scientific._style import set_style
 
 
 @chart("distrib/norm3d")

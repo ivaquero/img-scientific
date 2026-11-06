@@ -1,0 +1,11 @@
+id = "trials/lln"
+title = "Visualizing the Law of Large Numbers"
+kind = "line"
+module = "img_scientific.trials.theo_lln"
+out = "theo_lln"
+
+[params]
+n_sim = 1000
+p = 0.5
+seed = 42
+yticks = [0.0, 0.5, 1.0]

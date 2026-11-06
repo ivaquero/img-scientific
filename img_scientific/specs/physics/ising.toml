@@ -1,0 +1,12 @@
+id = "physics/ising"
+title = "Wolff Algorithm - 3x3 Ising Model at T=2.0"
+kind = "scatter"
+module = "img_scientific.physics.ising"
+out = "ising"
+
+[params]
+grid_size = 3
+temperature = 2.0
+num_steps = 1000
+seed = 1337
+color = "blue"

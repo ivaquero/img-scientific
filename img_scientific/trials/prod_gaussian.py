@@ -3,12 +3,14 @@ Original Author: Xavier Yang
 Link: https://github.com/ivaquero
 """
 
-from os import path
 from typing import NamedTuple
 
 import matplotlib.pyplot as plt
 import numpy as np
 from scipy import stats
+
+from img_scientific._registry import chart
+from img_scientific._style import set_style
 
 
 class Gaussian(NamedTuple):
@@ -36,12 +38,23 @@ def plot_gaussian_product(ax, xs, g1: Gaussian, g2: Gaussian):
     ax.legend()
 
 
-_, ax = plt.subplots()
-g1 = Gaussian(1, 10)
-g2 = Gaussian(5, 5)
-xs = np.linspace(-15, 15, 100)
-plot_gaussian_product(ax, xs, g1, g2)
+@chart("trials/prod_gaussian")
+def make_prod_gaussian(
+    *,
+    mean_1=1.0,
+    var_1=10.0,
+    mean_2=5.0,
+    var_2=5.0,
+    x_min=-15.0,
+    x_max=15.0,
+    x_num=100,
+    title="Product of Two Gaussians",
+):
+    """Two Gaussians and (up to a constant) their product ``N(m1,v1)·N(m2,v2)``."""
+    set_style()
 
-filename, extension = path.splitext(path.basename(__file__))
-# plt.savefig(f"../../images/trials/{filename}.png")
-plt.show()
+    fig, ax = plt.subplots()
+    xs = np.linspace(x_min, x_max, x_num)
+    plot_gaussian_product(ax, xs, Gaussian(mean_1, var_1), Gaussian(mean_2, var_2))
+    ax.set(title=title)
+    return fig

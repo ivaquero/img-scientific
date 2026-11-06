@@ -6,7 +6,8 @@
 A reproducible **teaching plotting toolkit** for statistics and graph-theory
 charts. Every chart can be redrawn **under different parameters** from a single
 specification, and the same specification drives **two independent backends** —
-Python (matplotlib) and Julia (CairoMakie).
+Python (matplotlib) and Julia (the Makie.jl ecosystem: CairoMakie for statistical
+charts, GraphMakie for graph layouts).
 
 ## Architecture
 
@@ -22,7 +23,7 @@ flowchart LR
     SPEC["specs/*.toml<br/>single source of truth<br/>(id · title · kind · module · out · params)"]
 
     SPEC --> PY["Python backend<br/>img_scientific/<br/>@chart registry → make_* (matplotlib)"]
-    SPEC --> JL["Julia backend<br/>julia/<br/>CHARTS registry → make_* (CairoMakie)"]
+    SPEC --> JL["Julia backend<br/>julia/<br/>CHARTS registry → make_* (Makie.jl)"]
 
     PY --> O1["images/distrib/*.png"]
     JL --> O2["images/julia/distrib/*.png"]
@@ -48,8 +49,9 @@ flowchart TD
     PKG --> TDIST["distrib/<br/>30 spec-driven make_* modules"]
     PKG --> TPEND["graphs · metric · trials<br/>fractals · funcs · physics<br/>(standalone scripts, not yet spec-driven)"]
 
-    JPKG --> JP["Project.toml"]
-    JPKG --> JC["common.jl · charts.jl · runall.jl"]
+    JPKG --> JP["Project.toml<br/>(CairoMakie · GraphMakie · Distributions)"]
+    JPKG --> JC["common.jl (bridge)<br/>charts.jl (loader)<br/>runall.jl"]
+    JPKG --> JDIST["distrib/<br/>_helpers.jl + 30 distrib_*.jl<br/>(one file per chart, 1:1 with Python)"]
 
     IMG --> IP["distrib/ · funcs/ · trials/<br/>(+ images/julia/ once instantiated)"]
 ```
@@ -58,10 +60,15 @@ flowchart TD
   specs, `_registry.py` provides the `@chart` decorator that maps each `id` to a
   `make_*`, and `_render.py` turns a spec into a saved PNG (lazily importing only
   the module it needs). Discovery is **spec-driven**, not by scanning imports.
-- `julia/` — the Julia counterpart. `common.jl` re-reads the *same*
-  `img_scientific/specs/*.toml`, `charts.jl` registers the mirrored `make_*`
-  implementations, and `runall.jl` renders everything that has a Julia
-  implementation and politely skips the rest.
+- `julia/` — the Julia counterpart, plotting on the **Makie.jl ecosystem**
+  (CairoMakie for the statistical charts; GraphMakie's `graphplot` reserved for
+  the future `graphs/` topic). `common.jl` re-reads the *same*
+  `img_scientific/specs/*.toml`; the chart bodies are split **one file per chart**
+  under `distrib/` (mirroring `img_scientific/distrib/distrib_*.py`), each
+  self-registering with `register!("distrib/<id>", ...)` — the Julia analogue of
+  Python's `@chart` decorator; `charts.jl` is now just a thin loader that pulls
+  in the shared `_helpers.jl` and every chart file; and `runall.jl` renders
+  everything that has a Julia implementation and politely skips the rest.
 - `images/` — output gallery. Python writes to `images/<topic>/`; Julia writes to
   `images/julia/<topic>/` so the two never overwrite each other.
 - `python/` — leftover standalone scripts from the pre-packaging layout (kept for

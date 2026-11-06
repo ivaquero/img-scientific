@@ -1,4 +1,4 @@
-"""Render pipeline: spec -> (import module) -> make-function -> figure -> PNG."""
+"""Render pipeline: spec -> (import [python].module) -> make-function -> figure -> PNG."""
 
 from __future__ import annotations
 
@@ -7,6 +7,19 @@ import pathlib
 
 from . import _io, _spec
 from ._registry import REGISTRY
+
+
+def _python_module(spec: dict) -> str:
+    """Return the Python import path for a spec, from its ``[python]`` binding.
+
+    The cross-language contract keeps ``id`` as the neutral key; each backend
+    lives in its own namespaced table so adding a third language never collides.
+    """
+    module = (spec.get("python") or {}).get("module")
+    if not module:
+        msg = f"spec {spec.get('id')!r} has no [python].module binding"
+        raise KeyError(msg)
+    return module
 
 
 def _ensure_registered(chart_id: str, module: str):
@@ -18,6 +31,15 @@ def _ensure_registered(chart_id: str, module: str):
     return REGISTRY[chart_id]
 
 
+def _close(fig) -> None:
+    """Release a matplotlib Figure so ``gallery`` does not leak every image."""
+    try:
+        import matplotlib.pyplot as plt
+    except ModuleNotFoundError:  # plotting lib absent -- nothing to release
+        return
+    plt.close(fig)
+
+
 def render(
     chart_id: str,
     *,
@@ -26,7 +48,7 @@ def render(
 ) -> pathlib.Path:
     """Render one chart by id, applying CLI ``--set`` overrides."""
     spec = _spec.load(chart_id)
-    func = _ensure_registered(chart_id, spec["module"])
+    func = _ensure_registered(chart_id, _python_module(spec))
 
     params = dict(spec.get("params", {}))
     params.update(overrides or {})
@@ -36,7 +58,9 @@ def render(
     topic = chart_id.split("/", 1)[0]
     name = spec.get("out") or chart_id.rsplit("/", 1)[-1]
     target = pathlib.Path(out) if out else _io.images_path(topic, name)
-    return _io.save(fig, target)
+    saved = _io.save(fig, target)
+    _close(fig)
+    return saved
 
 
 def gallery(topic: str | None = None) -> list[pathlib.Path]:

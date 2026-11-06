@@ -1,8 +1,10 @@
 id = "metric/cov3d_scatter"
 title = "3D Covariance Scatter + Marginal Contours"
 kind = "scatter3d"
-module = "img_scientific.metric.metric_cov3d_scatter"
 out = "metric_cov3d_scatter"
+
+[python]
+module = "img_scientific.metric.metric_cov3d_scatter"
 
 [params]
 mean = [2.0, 7.0]

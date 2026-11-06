@@ -1,8 +1,10 @@
 id = "distrib/norm_log_pdf"
 title = "Log-Normal Distribution"
 kind = "pdf"
-module = "img_scientific.distrib.distrib_norm_log_pdf"
 out = "distrib_norm_log_pdf"
+
+[python]
+module = "img_scientific.distrib.distrib_norm_log_pdf"
 
 [params]
 x_start = -9

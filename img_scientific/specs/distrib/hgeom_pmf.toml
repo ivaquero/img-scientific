@@ -1,8 +1,10 @@
 id = "distrib/hgeom_pmf"
 title = "Hypergeomic Distribution"
 kind = "pmf"
-module = "img_scientific.distrib.distrib_hgeom_pmf"
 out = "distrib_hgeom_pmf"
+
+[python]
+module = "img_scientific.distrib.distrib_hgeom_pmf"
 
 [params]
 Ns = [10, 20, 20, 40, 40]

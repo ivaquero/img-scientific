@@ -1,8 +1,10 @@
 id = "metric/cov3d"
 title = "3D Covariance Ellipsoid"
 kind = "surface3d"
-module = "img_scientific.metric.metric_cov3d"
 out = "metric_cov3d"
+
+[python]
+module = "img_scientific.metric.metric_cov3d"
 
 [params]
 mean = [0.3, 5.0, 10.0]

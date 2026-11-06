@@ -1,8 +1,10 @@
 id = "distrib/beta_cdf"
 title = "Beta Distribution"
 kind = "cdf"
-module = "img_scientific.distrib.distrib_beta_cdf"
 out = "distrib_beta_cdf"
+
+[python]
+module = "img_scientific.distrib.distrib_beta_cdf"
 
 [params]
 a_params = [0.5, 1, 3]

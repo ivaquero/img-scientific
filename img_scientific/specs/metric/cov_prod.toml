@@ -1,8 +1,10 @@
 id = "metric/cov_prod"
 title = "Bayesian Gaussian Product"
 kind = "ellipse"
-module = "img_scientific.metric.metric_cov_prod"
 out = "metric_cov_prod"
+
+[python]
+module = "img_scientific.metric.metric_cov_prod"
 
 [params]
 mean = [10, 10]

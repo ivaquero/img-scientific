@@ -1,8 +1,10 @@
 id = "fractals/sierpinski_triangle"
 title = "Sierpinski Triangles"
 kind = "polygon"
-module = "img_scientific.fractals.turtle_sierpinski_triangle"
 out = "turtle_sierpinski_triangle"
+
+[python]
+module = "img_scientific.fractals.turtle_sierpinski_triangle"
 
 [params]
 points = [[-100, -50], [0, 100], [100, -50]]

@@ -1,8 +1,10 @@
 id = "fractals/general_dim"
 title = "Generalized (Multifractal) Dimensions"
 kind = "line"
-module = "img_scientific.fractals.general_dim"
 out = "general_dim"
+
+[python]
+module = "img_scientific.fractals.general_dim"
 
 [params]
 p1 = 0.1111111111111111

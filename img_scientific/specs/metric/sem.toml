@@ -1,8 +1,10 @@
 id = "metric/sem"
 title = "Standard Deviation vs. Standard Error of the Mean"
 kind = "scatter"
-module = "img_scientific.metric.metric_sem"
 out = "metric_sem"
+
+[python]
+module = "img_scientific.metric.metric_sem"
 
 [params]
 size = 100

@@ -1,8 +1,10 @@
 id = "distrib/unif_pdf"
 title = "Uniform Distribution"
 kind = "pdf"
-module = "img_scientific.distrib.distrib_unif_pdf"
 out = "distrib_unif_pdf"
+
+[python]
+module = "img_scientific.distrib.distrib_unif_pdf"
 
 [params]
 locs = [0, 0, 1, -1]

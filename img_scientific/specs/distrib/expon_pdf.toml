@@ -1,8 +1,10 @@
 id = "distrib/expon_pdf"
 title = "Exponential Distribution"
 kind = "pdf"
-module = "img_scientific.distrib.distrib_expon_pdf"
 out = "distrib_expon_pdf"
+
+[python]
+module = "img_scientific.distrib.distrib_expon_pdf"
 
 [params]
 locs = [0.5, 1, 2]

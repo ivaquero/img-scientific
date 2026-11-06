@@ -1,8 +1,10 @@
 id = "distrib/beta_pdf"
 title = "Beta Distribution"
 kind = "pdf"
-module = "img_scientific.distrib.distrib_beta_pdf"
 out = "distrib_beta_pdf"
+
+[python]
+module = "img_scientific.distrib.distrib_beta_pdf"
 
 [params]
 a_params = [0.5, 1, 3]

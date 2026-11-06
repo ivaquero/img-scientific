@@ -1,8 +1,10 @@
 id = "distrib/t_pdf"
 title = "$t$ Distribution"
 kind = "pdf"
-module = "img_scientific.distrib.distrib_t_pdf"
 out = "distrib_t_pdf"
+
+[python]
+module = "img_scientific.distrib.distrib_t_pdf"
 
 [params]
 dfs = [1, 10, 100]

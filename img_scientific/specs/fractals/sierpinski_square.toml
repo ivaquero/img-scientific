@@ -1,8 +1,10 @@
 id = "fractals/sierpinski_square"
 title = "Sierpinski Squares"
 kind = "line"
-module = "img_scientific.fractals.turtle_sierpinski_square"
 out = "turtle_sierpinski_square"
+
+[python]
+module = "img_scientific.fractals.turtle_sierpinski_square"
 
 [params]
 start = [-100.0, -100.0]

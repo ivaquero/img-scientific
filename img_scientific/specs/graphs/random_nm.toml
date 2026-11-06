@@ -1,8 +1,10 @@
 id = "graphs/random_nm"
 title = "Erdős–Rényi G(n, m)"
 kind = "network"
-module = "img_scientific.graphs.graph_er"
 out = "graph_er"
+
+[python]
+module = "img_scientific.graphs.graph_er"
 
 [params]
 n = 10

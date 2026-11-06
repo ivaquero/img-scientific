@@ -1,8 +1,10 @@
 id = "fractals/koch_flake"
 title = "Koch Snowflake"
 kind = "line"
-module = "img_scientific.fractals.turtle_koch_flake"
 out = "turtle_koch_flake"
+
+[python]
+module = "img_scientific.fractals.turtle_koch_flake"
 
 [params]
 size = 400.0

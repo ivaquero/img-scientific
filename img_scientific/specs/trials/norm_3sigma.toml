@@ -1,8 +1,10 @@
 id = "trials/norm_3sigma"
 title = "Percentage of X falling between $i$ σ"
 kind = "pdf"
-module = "img_scientific.trials.stats_norm_3sigma"
 out = "stats_norm_3sigma"
+
+[python]
+module = "img_scientific.trials.stats_norm_3sigma"
 
 [params]
 loc = 0.0

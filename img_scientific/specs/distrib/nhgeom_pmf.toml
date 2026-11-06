@@ -1,8 +1,10 @@
 id = "distrib/nhgeom_pmf"
 title = "Negative Hypergeomic Distribution"
 kind = "pmf"
-module = "img_scientific.distrib.distrib_nhgeom_pmf"
 out = "distrib_nhgeom_pmf"
+
+[python]
+module = "img_scientific.distrib.distrib_nhgeom_pmf"
 
 [params]
 Ns = [10, 20, 20, 40, 40]

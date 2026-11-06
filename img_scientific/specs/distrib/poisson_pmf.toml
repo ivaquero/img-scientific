@@ -1,8 +1,10 @@
 id = "distrib/poisson_pmf"
 title = "Poisson Distribution"
 kind = "pmf"
-module = "img_scientific.distrib.distrib_poisson_pmf"
 out = "distrib_poisson_pmf"
+
+[python]
+module = "img_scientific.distrib.distrib_poisson_pmf"
 
 [params]
 lambdas = [1, 5, 10]

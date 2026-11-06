@@ -1,8 +1,10 @@
 id = "metric/cov3d_surface"
 title = "3D Gaussian PDF Surface"
 kind = "surface3d"
-module = "img_scientific.metric.metric_cov3d_surface"
 out = "metric_cov3d_surface"
+
+[python]
+module = "img_scientific.metric.metric_cov3d_surface"
 
 [params]
 mean = [2.0, 17.0]

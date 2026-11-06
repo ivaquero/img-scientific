@@ -1,8 +1,10 @@
 id = "distrib/gamma_pdf"
 title = "Gamma Distribution"
 kind = "pdf"
-module = "img_scientific.distrib.distrib_gamma_pdf"
 out = "distrib_gamma_pdf"
+
+[python]
+module = "img_scientific.distrib.distrib_gamma_pdf"
 
 [params]
 a_params = [5, 0.5, 1]

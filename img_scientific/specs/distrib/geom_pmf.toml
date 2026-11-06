@@ -1,8 +1,10 @@
 id = "distrib/geom_pmf"
 title = "Geometric Distribution"
 kind = "pmf"
-module = "img_scientific.distrib.distrib_geom_pmf"
 out = "distrib_geom_pmf"
+
+[python]
+module = "img_scientific.distrib.distrib_geom_pmf"
 
 [params]
 ps = [0.1, 0.5, 0.8]

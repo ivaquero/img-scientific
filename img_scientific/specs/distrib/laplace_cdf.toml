@@ -1,8 +1,10 @@
 id = "distrib/laplace_cdf"
 title = "Laplace Distribution"
 kind = "cdf"
-module = "img_scientific.distrib.distrib_laplace_cdf"
 out = "distrib_laplace_cdf"
+
+[python]
+module = "img_scientific.distrib.distrib_laplace_cdf"
 
 [params]
 locs = [-1, 0, 0]

@@ -1,8 +1,10 @@
 id = "distrib/bin_pmf"
 title = "Binomial Distribution"
 kind = "pmf"
-module = "img_scientific.distrib.distrib_bin_pmf"
 out = "distrib_bin_pmf"
+
+[python]
+module = "img_scientific.distrib.distrib_bin_pmf"
 
 [params]
 ns = [10, 20, 20, 40]

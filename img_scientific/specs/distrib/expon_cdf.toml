@@ -1,8 +1,10 @@
 id = "distrib/expon_cdf"
 title = "Exponential Distribution"
 kind = "cdf"
-module = "img_scientific.distrib.distrib_expon_cdf"
 out = "distrib_expon_cdf"
+
+[python]
+module = "img_scientific.distrib.distrib_expon_cdf"
 
 [params]
 locs = [0.5, 1, 2]

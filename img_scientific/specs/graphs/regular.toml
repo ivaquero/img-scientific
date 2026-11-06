@@ -1,8 +1,10 @@
 id = "graphs/regular"
 title = "Regular Graph"
 kind = "network"
-module = "img_scientific.graphs.path_regular"
 out = "path_regular"
+
+[python]
+module = "img_scientific.graphs.path_regular"
 
 [params]
 n = 10

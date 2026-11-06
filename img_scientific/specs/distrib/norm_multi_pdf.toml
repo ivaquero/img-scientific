@@ -1,8 +1,10 @@
 id = "distrib/norm_multi_pdf"
 title = "Multivariate Normal Distribution"
 kind = "pdf"
-module = "img_scientific.distrib.distrib_norm_multi_pdf"
 out = "distrib_norm_multi_pdf"
+
+[python]
+module = "img_scientific.distrib.distrib_norm_multi_pdf"
 
 [params]
 sigma_x1 = 1

@@ -1,8 +1,10 @@
 id = "distrib/f_pdf"
 title = "F Distribution"
 kind = "pdf"
-module = "img_scientific.distrib.distrib_f_pdf"
 out = "distrib_f_pdf"
+
+[python]
+module = "img_scientific.distrib.distrib_f_pdf"
 
 [params]
 locs = [10, 40, 40]

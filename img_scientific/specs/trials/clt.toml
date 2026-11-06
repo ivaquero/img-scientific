@@ -1,8 +1,10 @@
 id = "trials/clt"
 title = "Central Limit Theorem"
 kind = "hist"
-module = "img_scientific.trials.theo_clt"
 out = "theo_clt"
+
+[python]
+module = "img_scientific.trials.theo_clt"
 
 [params]
 n_sim = 10000

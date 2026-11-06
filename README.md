@@ -13,14 +13,16 @@ charts, GraphMakie for graph layouts).
 
 The project follows a **spec contract** design: one repository, two packages,
 coordinated by a language-neutral `specs/*.toml` layer. A spec only carries the
-contract — `id · title · kind · module · out · params` — and **never** any
-plotting logic. Each language therefore keeps its own `id → function` mapping,
+contract — `id · title · kind · out · params` — and **never** any
+plotting logic. Backend bindings are namespaced (e.g. `[python].module`) so `id`
+remains the single cross-language key. Each language therefore keeps its own
+`id → function` mapping,
 so the two backends stay in sync on *what* to draw while remaining free in *how*
 they draw it.
 
 ```mermaid
 flowchart LR
-    SPEC["specs/*.toml<br/>single source of truth<br/>(id · title · kind · module · out · params)"]
+    SPEC["specs/*.toml<br/>single source of truth<br/>(id · title · kind · out · params + [python] binding)"]
 
     SPEC --> PY["Python backend<br/>img_scientific/<br/>@chart registry → make_* (matplotlib)"]
     SPEC --> JL["Julia backend<br/>julia/<br/>CHARTS registry → make_* (Makie.jl)"]
@@ -70,8 +72,6 @@ flowchart LR
   everything that has a Julia implementation and politely skips the rest.
 - `images/` — output gallery. Python writes to `images/<topic>/`; Julia writes to
   `images/julia/<topic>/` so the two never overwrite each other.
-- `python/` — leftover standalone scripts from the pre-packaging layout (kept for
-  reference).
 
 ## Quick Start
 

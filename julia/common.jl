@@ -157,9 +157,14 @@ function render(id; overrides::AbstractDict = Dict())
     haskey(CHARTS, id) ||
         error("no Julia implementation for '$id' (registered: $(registered())) -- load charts.jl or port this chart")
     p = params(id; overrides)
-    # The spec's top-level ``title`` is part of the shared contract; inject it so
-    # implementations render the same heading as Python without re-declaring it.
-    p["title"] = get(spec(id), "title", id)
+    # The spec's top-level ``title`` is part of the shared contract; inject it as
+    # the default so implementations render the same heading as Python. But honour
+    # an explicit ``--set title=`` override: params() has already merged overrides
+    # into ``p``, so only fill title when it is absent (matches Python, where
+    # title is a make_* kwarg default that overrides win against).
+    if !haskey(p, "title")
+        p["title"] = get(spec(id), "title", id)
+    end
     fig = CHARTS[id](p)
     path = out_path(id)
     CairoMakie_save(fig, path)

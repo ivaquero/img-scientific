@@ -1,8 +1,10 @@
 id = "fractals/koch_curve"
 title = "Koch Curve"
 kind = "line"
-module = "img_scientific.fractals.turtle_koch_curve"
 out = "turtle_koch_curve"
+
+[python]
+module = "img_scientific.fractals.turtle_koch_curve"
 
 [params]
 size = 600.0

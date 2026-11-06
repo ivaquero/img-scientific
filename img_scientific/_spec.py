@@ -10,9 +10,12 @@ Spec keys
 id      : str  -- "topic/name", e.g. "distrib/geom_pmf" (also the spec path)
 title   : str
 kind    : str  -- pmf | pdf | cdf | hist | network | ...
-module  : str  -- dotted Python module that registers this chart
 out     : str  -- output PNG stem (kept equal to the legacy image filename)
 params  : dict -- keyword defaults passed to the chart function
+
+Backend bindings are namespaced so ``id`` stays the single cross-language key:
+[python].module : str -- dotted Python module that registers this chart
+(other backends would add their own table, e.g. [julia], and ignore this one)
 """
 
 from __future__ import annotations
@@ -61,12 +64,14 @@ def coerce(value: str):
         return lowered == "true"
     if "," in text:
         return [coerce(part) for part in text.split(",")]
-    for cast in (int, float):
-        try:
-            return cast(text)
-        except ValueError:
-            continue
-    return text
+    try:
+        return int(text)
+    except ValueError:
+        pass
+    try:
+        return float(text)
+    except ValueError:
+        return text
 
 
 def parse_set(items) -> dict:

@@ -1,8 +1,10 @@
 id = "distrib/bern_pmf"
 title = "Bernoulli Distribution"
 kind = "pmf"
-module = "img_scientific.distrib.distrib_bern_pmf"
 out = "distrib_bern_pmf"
+
+[python]
+module = "img_scientific.distrib.distrib_bern_pmf"
 
 [params]
 ps = [0.1, 0.5, 0.8]

@@ -1,8 +1,10 @@
 id = "graphs/ws_experiment"
 title = "Normalized clustering coefficient and path length"
 kind = "curve"
-module = "img_scientific.graphs.graph_ws_exp"
 out = "graph_ws_exp"
+
+[python]
+module = "img_scientific.graphs.graph_ws_exp"
 
 [params]
 n = 100

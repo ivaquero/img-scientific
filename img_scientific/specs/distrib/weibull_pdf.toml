@@ -1,8 +1,10 @@
 id = "distrib/weibull_pdf"
 title = "Weibull Distribution"
 kind = "pdf"
-module = "img_scientific.distrib.distrib_weibull_pdf"
 out = "distrib_weibull_pdf"
+
+[python]
+module = "img_scientific.distrib.distrib_weibull_pdf"
 
 [params]
 ks = [0.5, 1, 5]

@@ -1,8 +1,10 @@
 id = "distrib/unif_cdf"
 title = "Uniform Distribution"
 kind = "cdf"
-module = "img_scientific.distrib.distrib_unif_cdf"
 out = "distrib_unif_cdf"
+
+[python]
+module = "img_scientific.distrib.distrib_unif_cdf"
 
 [params]
 locs = [0, 0, 1, -1]

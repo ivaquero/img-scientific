@@ -1,8 +1,10 @@
 id = "trials/prod_gaussian"
 title = "Product of Two Gaussians"
 kind = "pdf"
-module = "img_scientific.trials.prod_gaussian"
 out = "prod_gaussian"
+
+[python]
+module = "img_scientific.trials.prod_gaussian"
 
 [params]
 mean_1 = 1.0

@@ -1,8 +1,10 @@
 id = "graphs/ws_lattice"
 title = "Watts-Strogatz Rewiring"
 kind = "network"
-module = "img_scientific.graphs.graph_ws"
 out = "graph_ws"
+
+[python]
+module = "img_scientific.graphs.graph_ws"
 
 [params]
 n = 10

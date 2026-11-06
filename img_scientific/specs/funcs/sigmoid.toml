@@ -1,8 +1,10 @@
 id = "funcs/sigmoid"
 title = "Sigmoid"
 kind = "curve"
-module = "img_scientific.funcs.func_sigmoid"
 out = "func_sigmoid"
+
+[python]
+module = "img_scientific.funcs.func_sigmoid"
 
 [params]
 z_min = -8.0

@@ -1,8 +1,10 @@
 id = "distrib/laplace_pdf"
 title = "Laplace Distribution"
 kind = "pdf"
-module = "img_scientific.distrib.distrib_laplace_pdf"
 out = "distrib_laplace_pdf"
+
+[python]
+module = "img_scientific.distrib.distrib_laplace_pdf"
 
 [params]
 locs = [-1, 0, 0]

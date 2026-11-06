@@ -1,8 +1,10 @@
 id = "distrib/norm_cdf"
 title = "Normal Distribution"
 kind = "cdf"
-module = "img_scientific.distrib.distrib_norm_cdf"
 out = "distrib_norm_cdf"
+
+[python]
+module = "img_scientific.distrib.distrib_norm_cdf"
 
 [params]
 locs = [-1, 0, 0]

@@ -1,8 +1,10 @@
 id = "distrib/gamma_cdf"
 title = "Gamma Distribution"
 kind = "cdf"
-module = "img_scientific.distrib.distrib_gamma_cdf"
 out = "distrib_gamma_cdf"
+
+[python]
+module = "img_scientific.distrib.distrib_gamma_cdf"
 
 [params]
 a_params = [5, 0.5, 1]

@@ -1,8 +1,10 @@
 id = "distrib/chi2_pdf"
 title = "$χ^2$ Distribution"
 kind = "pdf"
-module = "img_scientific.distrib.distrib_chi2_pdf"
 out = "distrib_chi2_pdf"
+
+[python]
+module = "img_scientific.distrib.distrib_chi2_pdf"
 
 [params]
 locs = [0.5, 1, 2.5]

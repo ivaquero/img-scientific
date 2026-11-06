@@ -1,0 +1,198 @@
+"""Static spec-contract tests for the Python side (dependency-free).
+
+The whole point of this repo is the L1 "spec contract": the language-neutral
+``img_scientific/specs/<topic>/*.toml`` files are the single source of truth,
+and each Python module must honour that contract. This test enforces it
+*statically* -- it only parses TOML + AST, so it runs with the system Python
+(no numpy / matplotlib / scipy required) and therefore belongs in CI.
+
+Contract checked here (Python side):
+  1. every spec carries the required keys id/title/kind/out (+ a [python] binding)
+  2. the spec's ``id`` equals the "<topic>/<name>" implied by its path
+  3. the ``[python] module`` binding resolves to a real file under ``img_scientific/``
+  4. that file has exactly one ``@chart(...)`` and its id == spec id
+  5. the decorated function accepts every key in the spec ``params``
+     (so ``_render.render`` never dies with a TypeError on func(**params))
+  6. ``title`` is a top-level key, never smuggled into ``[params]``
+  7. no reference PNG under ``images/`` (excluding ``images/julia``) is an
+     orphan -- every committed image stem must match some spec ``out``
+
+Run under pytest in CI, or directly with ``python tests/test_contract.py``.
+"""
+
+from __future__ import annotations
+
+import ast
+import pathlib
+import sys
+
+try:  # Python 3.11+
+    import tomllib
+except ModuleNotFoundError:  # Python 3.10 fallback
+    import tomli as tomllib  # type: ignore[no-redef]
+
+REPO = pathlib.Path(__file__).resolve().parents[1]
+PKG = REPO / "img_scientific"
+SPEC_ROOT = PKG / "specs"
+IMAGES_ROOT = REPO / "images"
+
+REQUIRED_KEYS = ("id", "title", "kind", "out")
+
+
+def _load_specs() -> dict[pathlib.Path, dict]:
+    specs: dict[pathlib.Path, dict] = {}
+    for path in sorted(SPEC_ROOT.rglob("*.toml")):
+        with path.open("rb") as fh:
+            specs[path] = tomllib.load(fh)
+    return specs
+
+
+def _module_to_file(module: str) -> pathlib.Path:
+    """Map a dotted module like ``img_scientific.distrib.x`` to its ``.py`` path."""
+    rel = module.split("img_scientific.", 1)[-1].replace(".", "/")
+    return PKG / f"{rel}.py"
+
+
+def _chart_decorators(tree: ast.AST) -> tuple[list[str], list[str]]:
+    """Return (chart_ids, kwarg_names) for functions decorated with ``@chart``."""
+    chart_ids: list[str] = []
+    kwarg_names: list[str] = []
+    for node in ast.walk(tree):
+        if not isinstance(node, ast.FunctionDef) or not node.decorator_list:
+            continue
+        chart_ids.extend(
+            dec.args[0].value
+            for dec in node.decorator_list
+            if isinstance(dec, ast.Call)
+            and getattr(dec.func, "id", None) == "chart"
+            and dec.args
+            and isinstance(dec.args[0], ast.Constant)
+        )
+        kwarg_names.extend(a.arg for a in node.args.kwonlyargs)
+    return chart_ids, kwarg_names
+
+
+def check_specs() -> list[str]:
+    """Validate every spec against the ``[python].module``/registry contract."""
+    problems: list[str] = []
+    specs = _load_specs()
+    if not specs:
+        return ["no specs found under img_scientific/specs"]
+
+    for path, spec in specs.items():
+        problems.extend(
+            f"{path.name}: missing required key '{key}'"
+            for key in REQUIRED_KEYS
+            if key not in spec
+        )
+
+        sid = spec.get("id")
+        implied = f"{path.parent.name}/{path.stem}"
+        if sid != implied:
+            problems.append(f"{path.name}: spec id {sid!r} != path-implied {implied!r}")
+
+        binding = spec.get("python")
+        if binding is None:
+            problems.append(f"{path.name}: missing '[python]' binding table (module)")
+            continue
+        module = binding.get("module")
+        if not module:
+            problems.append(f"{sid}: [python] binding has no 'module'")
+            continue
+        mod_file = _module_to_file(module)
+        if not mod_file.exists():
+            problems.append(f"{sid}: module file not found: {mod_file}")
+            continue
+
+        tree = ast.parse(mod_file.read_text(encoding="utf-8"))
+        chart_ids, kwargs = _chart_decorators(tree)
+        if chart_ids != [sid]:
+            problems.append(f"{sid}: @chart ids {chart_ids} != spec id [{sid}]")
+
+        params = set((spec.get("params") or {}).keys())
+        missing = params - set(kwargs)
+        if missing:
+            problems.append(f"{sid}: spec params not accepted by make_*: {sorted(missing)}")
+
+        if "title" in (spec.get("params") or {}):
+            problems.append(f"{sid}: 'title' must be top-level, not inside [params]")
+
+    return problems
+
+
+def check_no_orphan_images() -> list[str]:
+    """Every committed reference PNG must correspond to some spec ``out`` stem.
+
+    ``images/julia`` is the Julia renderer's own output tree and is not part of
+    the Python reference set, so it is excluded. A *missing* image (a spec whose
+    ``out`` has no PNG yet) is acceptable -- those are regenerated by
+    ``imgsci gallery`` -- but an *orphan* (a PNG no spec declares) is drift and
+    fails here.
+    """
+    outs = {spec.get("out") or spec["id"].rsplit("/", 1)[-1] for spec in _load_specs().values()}
+    if not IMAGES_ROOT.exists():
+        return []
+    problems: list[str] = []
+    for png in sorted(IMAGES_ROOT.rglob("*.png")):
+        if "julia" in png.relative_to(IMAGES_ROOT).parts:
+            continue
+        if png.stem not in outs:
+            problems.append(f"{png.relative_to(REPO)}: orphan image (no spec out == {png.stem!r})")
+    return problems
+
+
+def check_neutral_contract() -> list[str]:
+    """ADR 0001 guard: ``module`` must NOT be a neutral top-level spec key.
+
+    The cross-language contract keeps ``id`` as the only backend key; the Python
+    import path lives in ``[python].module``. This catches any regression that
+    re-adds a top-level ``module`` (or sneaks a ``module`` column into params).
+    """
+    problems: list[str] = []
+    for path, spec in _load_specs().items():
+        if "module" in spec:
+            problems.append(
+                f"{path.relative_to(REPO)}: top-level 'module' is not allowed "
+                f"(move it under '[python] module' per ADR 0001)"
+            )
+        if "module" in (spec.get("params") or {}):
+            problems.append(f"{path.relative_to(REPO)}: 'module' must not be a [params] column")
+    return problems
+
+
+def run_all() -> list[str]:
+    return check_specs() + check_neutral_contract() + check_no_orphan_images()
+
+
+# --- pytest entry points -----------------------------------------------------
+
+def test_spec_contract():
+    problems = check_specs()
+    assert not problems, "spec-contract violations:\n  " + "\n  ".join(problems)
+
+
+def test_neutral_contract():
+    problems = check_neutral_contract()
+    assert not problems, "backend-binding leaks into the neutral contract:\n  " + "\n  ".join(problems)
+
+
+def test_no_orphan_images():
+    problems = check_no_orphan_images()
+    assert not problems, "orphan reference images:\n  " + "\n  ".join(problems)
+
+
+# --- standalone entry point (no pytest needed) -------------------------------
+
+def _main() -> int:
+    problems = run_all()
+    n_specs = len(_load_specs())
+    if problems:
+        print(f"FAIL: {len(problems)} contract problem(s) across {n_specs} specs:")
+        print("\n".join(f"  - {p}" for p in problems))
+        return 1
+    print(f"PASS: {n_specs} specs consistent; no orphan reference images.")
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(_main())

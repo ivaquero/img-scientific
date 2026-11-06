@@ -1,8 +1,10 @@
 id = "distrib/multinom_pmf"
 title = "Multinomial Distribution"
 kind = "pmf"
-module = "img_scientific.distrib.distrib_multinom_pmf"
 out = "distrib_multinom_pmf"
+
+[python]
+module = "img_scientific.distrib.distrib_multinom_pmf"
 
 [params]
 n_trials_list = [20, 21, 22]

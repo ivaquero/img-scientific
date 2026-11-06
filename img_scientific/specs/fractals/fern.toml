@@ -1,8 +1,10 @@
 id = "fractals/fern"
 title = "Barnsley Fern"
 kind = "scatter"
-module = "img_scientific.fractals.fern"
 out = "fern"
+
+[python]
+module = "img_scientific.fractals.fern"
 
 [params]
 num_points = 50000

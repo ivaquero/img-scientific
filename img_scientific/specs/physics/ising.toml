@@ -1,8 +1,10 @@
 id = "physics/ising"
 title = "Wolff Algorithm - 3x3 Ising Model at T=2.0"
 kind = "scatter"
-module = "img_scientific.physics.ising"
 out = "ising"
+
+[python]
+module = "img_scientific.physics.ising"
 
 [params]
 grid_size = 3

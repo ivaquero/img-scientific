@@ -1,8 +1,10 @@
 id = "distrib/nbinom_pmf"
 title = "Negative Binomial Distribution"
 kind = "pmf"
-module = "img_scientific.distrib.distrib_nbinom_pmf"
 out = "distrib_nbinom_pmf"
+
+[python]
+module = "img_scientific.distrib.distrib_nbinom_pmf"
 
 [params]
 ns = [10, 20, 20, 40]

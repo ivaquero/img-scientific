@@ -1,8 +1,10 @@
 id = "graphs/complete_digraph"
 title = "Complete Directed Graph"
 kind = "network"
-module = "img_scientific.graphs.graph_random_d"
 out = "graph_random_d"
+
+[python]
+module = "img_scientific.graphs.graph_random_d"
 
 [params]
 n = 5

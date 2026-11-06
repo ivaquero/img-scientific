@@ -1,8 +1,10 @@
 id = "distrib/dirichlet_pdf"
 title = "Dirichlet Distribution"
 kind = "pdf"
-module = "img_scientific.distrib.distrib_dirichlet_pdf"
 out = "distrib_dirichlet_pdf"
+
+[python]
+module = "img_scientific.distrib.distrib_dirichlet_pdf"
 
 [params]
 alpha_lists = [[1, 1, 1], [1, 1, 3], [2, 2, 6], [2, 2, 2]]

@@ -1,8 +1,10 @@
 id = "distrib/norm_pdf"
 title = "Normal Distribution"
 kind = "pdf"
-module = "img_scientific.distrib.distrib_norm_pdf"
 out = "distrib_norm_pdf"
+
+[python]
+module = "img_scientific.distrib.distrib_norm_pdf"
 
 [params]
 locs = [-1, 0, 0]

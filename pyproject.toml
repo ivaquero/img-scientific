@@ -15,6 +15,7 @@ dependencies = [
 
 [project.optional-dependencies]
 dev = [
+  "pytest>=8.0",
   "ruff>=0.15.11",
 ]
 
@@ -30,6 +31,9 @@ packages = ["img_scientific"]
 
 [tool.pyrefly]
 search-path = ["img_scientific"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
 
 [tool.ruff]
 fix = true

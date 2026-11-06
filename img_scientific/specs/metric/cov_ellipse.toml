@@ -1,8 +1,10 @@
 id = "metric/cov_ellipse"
 title = "Covariance Ellipse"
 kind = "ellipse"
-module = "img_scientific.metric.metric_cov_ellipse"
 out = "metric_cov_ellipse"
+
+[python]
+module = "img_scientific.metric.metric_cov_ellipse"
 
 [params]
 mean = [2, 7]

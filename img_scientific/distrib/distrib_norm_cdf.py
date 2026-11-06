@@ -3,31 +3,37 @@ Original Author: Xavier Yang
 Link: https://github.com/ivaquero
 """
 
-from os import path
-
 import matplotlib.pyplot as plt
 import numpy as np
 from scipy import stats
 
-plt.style.use("seaborn-v0_8-dark")
+from .._registry import chart
+from .._style import set_style
 
-locs = [-1, 0, 0]
-scales = [1, 1, 2]
-colors = ["blue", "green", "orange"]
-alphas = [0.4, 0.4, 0.6]
 
-X = np.linspace(-10, 10, 100)
+@chart("distrib/norm_cdf")
+def make_norm_cdf(
+    *,
+    locs=(-1, 0, 0),
+    scales=(1, 1, 2),
+    colors=("blue", "green", "orange"),
+    alphas=(0.4, 0.4, 0.6),
+    x_min=-10,
+    x_max=10,
+    x_num=100,
+    title="Normal Distribution",
+):
+    """Overlaid normal CDF curves for several ``(loc, scale)`` pairs."""
+    set_style()
 
-_, ax = plt.subplots()
+    X = np.linspace(x_min, x_max, x_num)
+    fig, ax = plt.subplots()
 
-for loc, scale, color, alpha in zip(locs, scales, colors, alphas, strict=True):
-    y = stats.norm(loc=loc, scale=scale).cdf(X)
-    ax.plot(X, y, label=f"μ={loc}, σ={scale}", color=color, alpha=alpha)
-    # ax.fill_between(X, y, color=color, alpha=0.25)
+    for loc, scale, color, alpha in zip(locs, scales, colors, alphas, strict=True):
+        y = stats.norm(loc=loc, scale=scale).cdf(X)
+        ax.plot(X, y, label=f"μ={loc}, σ={scale}", color=color, alpha=alpha)
+        # ax.fill_between(X, y, color=color, alpha=0.25)
 
-ax.set(xlabel="X", ylabel="CDF(X)", title="Normal Distribution")
-ax.legend()
-
-filename, extension = path.splitext(path.basename(__file__))
-# plt.savefig(f"../../images/distrs/{filename}.png")
-plt.show()
+    ax.set(xlabel="X", ylabel="CDF(X)", title=title)
+    ax.legend()
+    return fig

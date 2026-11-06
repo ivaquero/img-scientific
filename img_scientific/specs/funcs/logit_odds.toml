@@ -1,0 +1,14 @@
+id = "funcs/logit_odds"
+title = "Logit and Odds vs Probability"
+kind = "curve"
+out = "func_logit_odds"
+
+[python]
+module = "img_scientific.funcs.func_logit_odds"
+
+[params]
+p_min = 0.01
+p_max = 0.99
+p_num = 201
+logit_color = "blue"
+odds_color = "red"

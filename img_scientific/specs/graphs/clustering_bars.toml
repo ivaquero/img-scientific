@@ -1,0 +1,14 @@
+id = "graphs/clustering_bars"
+title = "Per-Node Clustering Coefficient"
+kind = "other"
+out = "graph_clustering_bars"
+
+[python]
+module = "img_scientific.graphs.graph_clustering_bars"
+
+[params]
+n = 15
+k = 4
+p = 0.2
+seed = 42
+node_color = "C1"

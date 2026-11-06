@@ -21,11 +21,7 @@ Backend bindings are namespaced so ``id`` stays the single cross-language key:
 from __future__ import annotations
 
 import pathlib
-
-try:  # Python 3.11+
-    import tomllib
-except ModuleNotFoundError:  # Python 3.10 fallback
-    import tomli as tomllib  # type: ignore[no-redef]
+import tomllib
 
 # <repo>/img_scientific/_spec.py -> parent == img_scientific (specs live inside the package)
 SPEC_ROOT = pathlib.Path(__file__).resolve().parent / "specs"

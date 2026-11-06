@@ -1,0 +1,12 @@
+id = "graphs/path_matrix"
+title = "All-Pairs Shortest-Path Distances"
+kind = "other"
+out = "graph_path_matrix"
+
+[python]
+module = "img_scientific.graphs.graph_path_matrix"
+
+[params]
+n = 12
+k = 4
+cmap = "magma"

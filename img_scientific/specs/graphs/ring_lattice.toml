@@ -1,0 +1,13 @@
+id = "graphs/ring_lattice"
+title = "Ring Lattice G(n, k)"
+kind = "network"
+out = "graph_ring_lattice"
+
+[python]
+module = "img_scientific.graphs.graph_ring_lattice"
+
+[params]
+n = 12
+k = 4
+node_size = 900
+node_color = "C0"

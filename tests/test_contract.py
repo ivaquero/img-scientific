@@ -25,11 +25,7 @@ from __future__ import annotations
 import ast
 import pathlib
 import sys
-
-try:  # Python 3.11+
-    import tomllib
-except ModuleNotFoundError:  # Python 3.10 fallback
-    import tomli as tomllib  # type: ignore[no-redef]
+import tomllib
 
 REPO = pathlib.Path(__file__).resolve().parents[1]
 PKG = REPO / "img_scientific"

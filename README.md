@@ -37,7 +37,7 @@ when and where to save.
 ## Project Structure
 
 ```mermaid
-flowchart TD
+flowchart LR
     ROOT["img-scientific/"]
 
     ROOT --> PKG["img_scientific/<br/>Python package"]
@@ -45,15 +45,14 @@ flowchart TD
     ROOT --> IMG["images/<br/>rendered PNG gallery"]
 
     PKG --> INFRA["infra<br/>_io · _style · _spec<br/>_registry · _render · cli"]
-    PKG --> SPECS["specs/distrib/<br/>30 language-neutral .toml"]
-    PKG --> TDIST["distrib/<br/>30 spec-driven make_* modules"]
-    PKG --> TPEND["graphs · metric · trials<br/>fractals · funcs · physics<br/>(standalone scripts, not yet spec-driven)"]
+    PKG --> SPECS["specs/&lt;topic&gt;/<br/>57 language-neutral .toml"]
+    PKG --> TCHART["7 spec-driven topics<br/>distrib · funcs · physics · trials<br/>metric · fractals · graphs<br/>(make_* modules + shared helpers)"]
 
-    JPKG --> JP["Project.toml<br/>(CairoMakie · GraphMakie · Distributions)"]
+    JPKG --> JP["Project.toml<br/>(CairoMakie · GraphMakie · Graphs<br/>· Distributions)"]
     JPKG --> JC["common.jl (bridge)<br/>charts.jl (loader)<br/>runall.jl"]
-    JPKG --> JDIST["distrib/<br/>_helpers.jl + 30 distrib_*.jl<br/>(one file per chart, 1:1 with Python)"]
+    JPKG --> JDIST["7 topic dirs, 1:1 with Python<br/>distrib · funcs · physics · trials<br/>metric · fractals · graphs<br/>(one file per chart, self-registering)"]
 
-    IMG --> IP["distrib/ · funcs/ · trials/<br/>(+ images/julia/ once instantiated)"]
+    IMG --> IP["images/&lt;topic&gt;/ (Python)<br/>images/julia/&lt;topic&gt;/ (Julia)<br/>7 topics each"]
 ```
 
 - `img_scientific/` — the installable Python package. `_spec.py` reads the TOML
@@ -61,8 +60,8 @@ flowchart TD
   `make_*`, and `_render.py` turns a spec into a saved PNG (lazily importing only
   the module it needs). Discovery is **spec-driven**, not by scanning imports.
 - `julia/` — the Julia counterpart, plotting on the **Makie.jl ecosystem**
-  (CairoMakie for the statistical charts; GraphMakie's `graphplot` reserved for
-  the future `graphs/` topic). `common.jl` re-reads the *same*
+  (CairoMakie for the statistical charts; GraphMakie's `graphplot` drives the
+  `graphs/` topic). `common.jl` re-reads the *same*
   `img_scientific/specs/*.toml`; the chart bodies are split **one file per chart**
   under `distrib/` (mirroring `img_scientific/distrib/distrib_*.py`), each
   self-registering with `register!("distrib/<id>", ...)` — the Julia analogue of
@@ -105,22 +104,30 @@ Continuous: Normal, Log-Normal, Multi-Variate Normal, 3-D Normal, Exponential,
 Beta, Gamma, Laplace, Cauchy, Chi-Square, Student-t, F, Uniform, Weibull,
 Dirichlet.
 
-### Functions & Metrics
+### Functions
 
-Sigmoid, Entropy, Standard Error of Mean (SEM).
+Sigmoid.
+
+### Covariance & Information Metrics
+
+Covariance ellipse, prior × likelihood covariance product, 3-D covariance
+(ellipsoid surface, scatter, marginal surface), entropy, standard error of the
+mean (SEM).
 
 ### Data-Science Trials
 
-Central Limit Theorem, Law of Large Numbers, Convolution of Uniform Distribution,
-Normal Distribution with 3 Sigmas, Normal Distribution's PDF and CDF.
+Central Limit Theorem, Law of Large Numbers, convolution of uniforms, product of
+two Gaussians, normal distribution with 3 sigmas, normal PDF and CDF.
 
-### Complexity
+### Fractals & Complexity
 
-Fractals: Sierpinski Triangle, Sierpinski Square, Koch Curve, Koch Flake.
+Barnsley fern, multifractal (generalized) dimensions, Koch curve, Koch
+snowflake, Sierpinski squares, Sierpinski triangle, Ising model (Wolff cluster).
 
-Graphs: Erdős-Rényi, Watts-Strogatz, Barabási-Albert.
+### Graphs & Networks
 
-Physics: Ising Model.
+Erdős–Rényi G(n, p) and G(n, m), complete directed graph, Watts-Strogatz
+rewiring, the small-world C(p)/L(p) experiment, and regular graphs.
 
 ## Credits
 
